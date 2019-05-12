@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="100"
+   id="svg1301"
+   version="1.0"
+   width="100"
+   x="0.0000000"
+   y="0.0000000"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="FontIcon.svg"
+   inkscape:export-filename="E:\Lucru\GavApps\Framework\Current\GAppCreator\GAppCreator\Images\load.png"
+   inkscape:export-xdpi="135"
+   inkscape:export-ydpi="135">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview3178"
+     showgrid="false"
+     inkscape:zoom="2"
+     inkscape:cx="260.75"
+     inkscape:cy="27"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1301"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata3142">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title></dc:title>
+        <dc:description />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>desktop</rdf:li>
+            <rdf:li>computer</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://www.openclipart.org/">
+            <dc:title>Open Clip Art Library</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Marko J. Kolehmainen</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Marko J. Kolehmainen</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:date />
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://web.resource.org/cc/PublicDomain" />
+        <dc:language>en</dc:language>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://web.resource.org/cc/PublicDomain">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient2160">
+      <stop
+         id="stop2162"
+         offset="0.0000000"
+         style="stop-color:#ffffff;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2164"
+         offset="1.0000000"
+         style="stop-color:#cfcfcf;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2139">
+      <stop
+         id="stop2141"
+         offset="0.0000000"
+         style="stop-color:#eaeaea;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2143"
+         offset="1.0000000"
+         style="stop-color:#bdbdbd;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2131">
+      <stop
+         id="stop2133"
+         offset="0.0000000"
+         style="stop-color:#ffffff;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2135"
+         offset="1.0000000"
+         style="stop-color:#c5c5c5;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2107">
+      <stop
+         id="stop2109"
+         offset="0.0000000"
+         style="stop-color:#85a7c7;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2111"
+         offset="1.0000000"
+         style="stop-color:#8799ad;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2101">
+      <stop
+         id="stop2103"
+         offset="0.0000000"
+         style="stop-color:#d2e9ff;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2105"
+         offset="1.0000000"
+         style="stop-color:#8395a7;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2085">
+      <stop
+         id="stop2087"
+         offset="0.0000000"
+         style="stop-color:#5a7187;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2089"
+         offset="1.0000000"
+         style="stop-color:#b3cbe5;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2075">
+      <stop
+         id="stop2077"
+         offset="0.0000000"
+         style="stop-color:#aad5ff;stop-opacity:1.0000000;" />
+      <stop
+         id="stop2079"
+         offset="1.0000000"
+         style="stop-color:#9aafc5;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="scale(1.098568,0.910276)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient2081"
+       x1="6.1218209"
+       x2="54.643921"
+       xlink:href="#linearGradient2085"
+       y1="22.823853"
+       y2="60.632614" />
+    <linearGradient
+       gradientTransform="scale(1.098568,0.910276)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient2083"
+       x1="6.1218209"
+       x2="54.643921"
+       xlink:href="#linearGradient2075"
+       y1="22.823853"
+       y2="60.632614" />
+    <linearGradient
+       gradientTransform="scale(0.962203,1.039281)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient2097"
+       x1="8.5302706"
+       x2="52.413239"
+       xlink:href="#linearGradient2101"
+       y1="21.091932"
+       y2="36.548515" />
+    <linearGradient
+       gradientTransform="scale(1.050999,0.951476)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient2099"
+       x1="11.886159"
+       x2="58.497231"
+       xlink:href="#linearGradient2107"
+       y1="20.066654"
+       y2="40.127937" />
+    <linearGradient
+       gradientTransform="matrix(0.95883,-3.823928e-7,0,0.760875,2.682745,5.004944)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient1391"
+       x1="14.459409"
+       x2="57.424511"
+       xlink:href="#linearGradient2131"
+       y1="27.533974"
+       y2="27.533974" />
+    <linearGradient
+       gradientTransform="matrix(0.95883,-3.823928e-7,0,0.760875,2.682745,5.004944)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient1393"
+       x1="14.459409"
+       x2="57.424511"
+       xlink:href="#linearGradient2139"
+       y1="27.533974"
+       y2="27.533974" />
+    <linearGradient
+       gradientTransform="matrix(0.95883,-3.922818e-7,1.498707e-7,0.760875,6.409503,2.970969)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient1397"
+       x1="14.459409"
+       x2="57.424511"
+       xlink:href="#linearGradient2160"
+       y1="27.533974"
+       y2="27.533974" />
+  </defs>
+  <rect
+     style="fill:none;stroke-width:32"
+     id="rect3016"
+     width="100"
+     height="100"
+     x="0"
+     y="0" />
+  <flowRoot
+     xml:space="preserve"
+     id="flowRoot3018"
+     style="font-size:48px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     transform="translate(-13.853027,6.667393)"><flowRegion
+       id="flowRegion3020"><rect
+         id="rect3022"
+         width="128"
+         height="133"
+         x="0.5"
+         y="2.5"
+         style="font-size:48px" /></flowRegion><flowPara
+       id="flowPara3024"
+       style="font-size:50px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:100%;text-anchor:middle;font-family:Arial;-inkscape-font-specification:Arial Bold">Abc</flowPara><flowPara
+       style="font-size:50px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:100%;text-anchor:middle;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       id="flowPara3026">123</flowPara></flowRoot></svg>

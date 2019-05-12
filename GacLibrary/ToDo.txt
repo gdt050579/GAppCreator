@@ -1,0 +1,6 @@
+﻿Parser:
+[DONE] * Nu exista variabilile serializabile in clasa derivata din App
+[DONE] * verificare ca clasele care au serializare sunt si derivate din Framework
+[DONE] * functia de serializare se adauga doar daca chiar exista serializare
+* verificare ca obiectele de tip clasa se si aloca
+* verificare ca obiectele derivate din Object au si macar un constructor de care trebuie

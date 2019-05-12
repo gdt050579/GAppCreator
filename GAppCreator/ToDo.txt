@@ -1,0 +1,298 @@
+﻿[DONE]-  incarcare resurse/orice altceva pe un fir separat + output/progress bar jos
+[DONE] - global settings (cu cai pentru Inkscape, Android, ....)
+[DONE] - raw data la filtru
+[DONE] - suport pentru stringuri
+[DONE] - suport pentru creare de shadere
+[DONE] - suport pentru sunete
+[DONE] - scintilla pentru editare locala a surselor
+[DONE] - suport build-uri pe diverse OS-uri
+[DONE] - lista de define-uri care se pot activa pe OS (Android/iOS/Windows/Debug/Linux/Mac)
+[DONE] - dublu click - deschide in inkscape sau in altceva
+[DONE] - de adaugat suport la editarea in editorul de shadere (sa pot sa pastrez valorile intre compilari, sa le pot creste automat, sa am si parametri pentru  cazul de 1,2,3,4 valori float, etc)
+[DONE] - de adaugat suport pentru shadere cu functii specifice (numele variabilelor sa se gaseasca in GAC - Shader.Index++);
+[DONE] - de adaugat validare la shadere (sa aiba toate variabilele setate)
+[DONE] - optiune de case-ing la string-uri
+[DONE] - la animation editor sa ma pot duce la primul slide cu erori
+[DONE] - suport pentru shadere pentru animation editor
+[DONE] - suport de verificare automata in animation editor daca se ba buildui animatia sau nu
+[DONE] - la animation editor sa am buton care sa imi arate erorile posibile (daca sunt)
+[DONE] - sa mearga butoanele de move to next/previous bookmark la animation editor
+[DONE] - la executie sa putem inspecta settings
+[DONE] - la executie sa putem inspecta texturile
+[DONE] - la executie sa putem inspecta profilele
+[DONE] - gasit o modalitate sa am mai multe imagini pentru diverse platforme
+[DONE] - gasit o modalitate ca sa am chiar mai multe imagini intr-o platforma
+[DONE] - facut sistemul de rate
+[DONE] - fix la framework la problema de scroll
+[DONE] - functii generale pentru linkurile de sharing
+[DONE] - suport de tipuri de date in settings (nu doar nume si valoare) - ci nume, tip, size, valoare
+[DONE] - la execution dialog - save log
+[DONE] - la execution dialog - highlight/filter + salvare intr-o alta lista + adaugare in listview
+[DONE] - la execution dialog - sa fac cumva sa imi dau seama care vin de la framework si care vin de la programul meu (modificare in GApp.h) 
+[DONE] - de vazut cum trebuie facute API-urile ca atunci cand am dat rate sa imi notez sa nu il mai bat pe om la cap
+[DONE] - rezolva problema cu caption-ul pentru fereastra de debug (sa nu mai fie in chineza)
+[DONE] - la GAC Editor - rezolva problema cu selectia multipla - cand sta prea mult pana le pune pe toate in property
+[DONE] - Android - suport pentru identificarea limbii
+[DONE] - Android - suport pentru sunete (sa fie incarcate in functie de limba) - cauta "//GDT: TO FIX" ub AndroidBuildExtension
+[DONE] - suport de pack a proiectului
+[DONE] - buton de close la panelul de executie
+[DONE] - la framework sa salveze si next scene
+[DONE] - tab-urile de la GAC Editor sa se schimbe ca la VS - nu in ordine
+[DONE] - parametri de run sa se puna intr-o clasa si sa se dea la Exec (fisierul settings e creat din acel punct)
+[DONE] - adaugat si status profile la exec dialog -> Application Status
+[DONE] - suport de shadere la butoane
+[DONE] - preview la shadere in GACEditor
+[DONE] - fix multi-touch pe Android
+[DONE] - fix multi-touch pe Framework
+[DONE] - setarea unui shader curata implicit parametri la controale
+[DONE] - SetTextShaderColor la Button
+[DONE] - CTRL+UP/Down la Ctrl+Tab cand se schimba in GACEditor fisierul gac curent
+[DONE] - scena de first time run this game (diferita de whats new)
+[DONE] - button de delete settings in execution dialog
+[DONE] - fix bug la deserializare pentru Global
+[DONE] - butonul "Add New Task" sa nu aiba si "Completed" activ (vizibil)
+[DONE] - inca cateva tipuri de task-uri (next update, ideea)
+[DONE] - daca nu am un caracter in framework, sa desenez un patrat rosu
+[DONE] - la fonturi sa pot sa pun baseline negativ (pentru -, ', etc)
+[DONE] - la rebuild imagini nu le si actualizeaza in preview
+[DONE] - optiune de conversie automata din google translate la string-uri
+[DONE] - la stringuri, nu se face refresh la comenzile de sus (de exemplu la UPPERCASE)
+[DONE] - la stringuri, la UPPERCASE se pierde \n
+[DONE] - la string-uri sa am si un preview pentru un font ales + schimbare de background ca sa vad cum s-ar vedea acel text
+[DONE] - la modul general sa am o verificare care testeaza daca macar fiecare string poate fi randat cu macar un font
+[DONE] - updateaza TextPainter de la C# cu cel din C++ 
+
+
+- suport pluginuri de vizualizare
+- compresie imagini in datele raw*
+;
+- editor pentru suportul intern de grafica vectorizata
+[DONE] - player pentru sunete in GACEditor
+
+- de adaugat suport ca atunci cand apas "," sa afisez si ceilalti parametri
+- la shader editor - suport pentru colorare a mai multor functii (str, length, etc)
+- la shader editor - suport pentru code complition (macar pentru functiile de baza din OpenGL)
+- preferinte pentru editor cu diverse optiuni
+
+- fereastra de cautat un frame care sa contina ceva ia Animation Editor
+- la editorul de cod din GAC sa am bookmark-uri (toogle + next si previos)
+
+- la executie sa putem inspecta variabilele sincronizate sau toate
+
+- modalitate de play de mp3-uri pentru Windows Desktop
+
+[DONE] - ad-uri interstitiale pentru Google AdMob
+
+[DONE] - proguard la Android (pe partea de Android)
+[DONE] - in primul tab sa fie un fel de status panel cu informatii generice despre acest build (cate resurse, cate ad-uri, ce OS) - dar si informatii generice despre toate resursele
+
+- pack la array-uri din resource viewer
+- verificare array-uri din resurse (sa fim siguri ca sunt complete)
+
+- optimizare viteza incarcare texturi
+
+- suport in framework pentru evenimente de tip Pause/Terminate in timpul incarcarii
+
+- adaugat si status sunete/media la exec dialog -> Application Status
+- suport pentru imagini 9-patch - pastreaza colturile si extinde centrul - se specifica dimensiunile colturilor sau doar lungit, sau doar latit
+
+[DONE] - check box
+- radio box
+
+- suport translate pentru Application NAme
+
+- suport de parametri pentru shadere in animation editor
+
+- progress bar la incarcare cu diverse optiuni (eventual un efect atunci cand se incarca)
+
+- find/replace/find all in GAC Editor
+[DONE] - alt meniu pentru click-dreapta la scintilla edit
+
+- Untangle:: App - linia 24 nu sare intelli sens-ul - verifica de ce !!!!
+
+- animation editorul nu verifica daca Shaderele exista
+
+
+- la stringuri, verifica de ce nu se traduce totul (poate sa depinde de \n sau de un punct)
+- la stringuri, se pare ca nu traduce cum trebuie daca totul e UPPERCASE
+
+[DONE] - F4 la gaceditor se duce la urmatoarea eroare
+- F12 la gaceditor se duce la definirea functiei
+[DONE] - FindAll in meniu
+
+[DONE] - sa am suport si pentru caractere specifice altor limbi (germana, franceza, spaniola, etc)
+- rezolvat problema cu parantezele automate la editor
+
+[DONE] - speed la incarcarea de imagini
+[DONe] - optiune de full-screen (la dev, windows) - sa fie un combobox
+
+
+[DONE] - la stringuri GACCreator-tab-ul strings, sa pot sa fac un check pentru un set de stringuri daca pot fi randate cu un anumit font
+
+[DONE] - rezolutia sa fie configurabila printr-un combo
+
+- la cod sa am o fereastra in care sa vad functiile din clasa curenta + dblclick sa ma duca acolo
+- pretty format la cod
+
+[DONE] - sa fac trecerea de la mod normal la mod in care fiecare tab major e un user control independer + o structura ProjectContext care tine mai multe date utile la toate tab-urile
+
+[DONE] - sa am o metoda prin care la AnimationEditor pot sa ciclez doar printre limbile pentru care am stringuri
+- Animation Editor sa isi dea seama daca ai un text care iese din dreptunghi
+[DONE] - Random 1..n sa ia  de la 1 la n
+[DONE] - daca modific stringurile - atunci nu devin vizibile si in animation editor
+[DONE] - cand se termina translate-ul nu se face update si la textul de jos ci doar la cel din celula
+
+[DONE] - click-ul din find all nu face si unfold
+
+[DONE] - sa pastreze contextul OpenGL in Android 3.0+
+[DONE] - sa adaug optiuni de setare a dimensiunii viewrect-ului la stringuri
+[DONE] - cand se porneste sa creeze folderele default
+[DONE] - sa mearga Back
+
+[DONE] - preprocesor sa permita sa adaugi scene
+[DONE] - android - sa punem si iconitele mai mari
+[DONE] - sa poti sa rebuild-uiesti imaginile care nu au fost generate
+[DONE] - sa iti coloreze cu rosu ce nu a fost incarcat
+[DONE] - trecere pe memcpy la renderer si buffer
+[DONE] - imagini care sa fie mai mari dar dinamic (nu se maresc la runtime)
+
+[DONE] - template-uri pentru fonturi
+[DONE] - template-uri pentru imagini
+
+[DONE] - interstitial ads [1 zi] 
+[DONE] - inplay purchase - [3-4 zile]
+
+[DONE] - la debug la codul din JNI (android) sa nu imi puna debug informations
+
+[DONE] - fonturi - sa pot sa stabilesc eu din editor characterul pentru care referentiem inaltimea (inclusiv ceva automat)
+- la word wrap sa am si o optiune sa setez inaltimea liniilor dupa cel mai mare caracter din text si nu setul de glyphuri
+- optiuni ca sa specific cum vreau sa se calculeze inaltimea unui caracter [cea mai mare dintre glyphuri, cea mai mare din text, una specifica, etc]
+- optiuni ca sa incarc doar fonturile specifice unei limbi (automat)
+- adaugare alte limbi (chineza, portugheza, etc - http://symbolcodes.tlt.psu.edu/bylanguage/portuguese.html)
+
+- la clasele derivate din object sa nu se poata compila decat daca are constructori din Application sau Scene - daca are macar un constructor care nu are acesti parametri - atunci sa iasa si sa nu compileze
+
+[DONE] - metoda sa decid cum incarc o imagine (dinamic, o maresc/micsorez la inceput, etc) + override la nivel de build
+[DONE] - imagine noua se seteaza default buildul "Develop" si limba default
+
+- fonturi si animation - cand le bag in profile, se considera automat ca am bagat si imaginile pe care le utilizeaza si acele imagini dispar din lista de imagini disponibile
+- imaginile din fonturi se incarca specific pentru fiecare limba
+
+- sunt probleme la resource editor daca setez la imagini dupa UseWidth mi se dezactiveaza totul si mai pot seta nimik la o imagine
+
+[DONE] - sistem de afisare procente in atribute (cu %)
+[DONE] - folder pentru templates
+[DONE] - folder pentru fonturi
+[DONE] - nu uita sa refaci pack-ul si pentru template-uri si fonturi !!!!
+
+[DONE] - screen.drawrect -> folositea unui shader
+[DONE] - In clasa control sa am un getX si getY unde se afla in controlul parinte
+- DrawImageResize pe partea stanga daca nu incape in ecran nu mai deseneaza.
+
+- cand sterg o resursa sa ma intrebe daca nu vreau sa le sterg si pe cele derivate
+
+- la profile cand adaug resurse imi apar si cele derivate (daca am o imagine neadaugata si derivata ei) imi apar amaboua - si nu ar trebui.
+
+[DONE] - mecanism sa ma notific  ca am vrut sa ies ca sa stiu sa ma duc la scena principala - de evaluat cum merge treaba cu o scena de tipul credits !!!!
+
+[DONE] - package-ing-ul sa fie intr-o fereastra in care pot stabili eu exact ce e nevoie (daca vreau sursele, daca vreau si iamginile, daca vreau si resursele, etc). La incarcare se va seta si un flag a.i. acel pachet sa poata fi utilizat de catre altcineva fara sa aiba treaba cu sursele.
+
+[DONE] - Android - protectie daca incerc sa schimb package-ul
+[DONE] - Android - ia in considerare cazul de la IAB cand se strica conexiunea cu connection center
+
+[DONE] - creste timpul de req. la un ad in caz de eroare gradat.
+
+- buton de vacum pentru proiect (sa stearga tot ce e aiurea)
+
+[DONE] - verifica bug la gaccreator / builder. Fac un build nou de Android si cand dau build (daca nu pun nici o resursa sa apartina acelui build) imi spune ca nu a putut crea package-ul pentru build - dar nu imi spune de ce !!!
+
+- buton la resurse sa iti arata doar imaginile pentru un anumit build
+- buton la resurse sa iti arate doar imaginile pentru o anumita rezolutie
+[DONE] - iconite specifice pentru un build + adaugare la surse, respectiv la pachete
+[DONE] - cand se copie din Android in Android nu se pastreaza toate campurile la create new build
+
+- termina functia FontResources::RemoveBuild(string)
+[DONE] - termina functioa FontVersionEditor::OnDeleteResolution
+
+[DONE] - networking class - email, open{xxx},
+[DONE] - billing - GetLastPurchaseDetails() - de tipul string
+[DONE] - API - ramane si api, dar apare si namespace-ul App sau le bag direct in Application
+[DONE] - billing - enumerare PurchaseStatus cu 3 valori
+[DONE] - suport pentru application name specific pentru un build
+
+[DONE] - modul de debug prin care comunici cu aplicatia - dai comenzi, etc
+
+[DONE] - sa poata porni cu parametru un proiect
+
+- BUG - ctrl-f cu tot selectat si se da close la pagina curenta crapa
+
+[DONE] - restart in meniul de executie
+
+[DONE] - Math.ABS, dar si alte functii (ciclice, adunare, increment, Min, Max, pe int si pe float)
+
+[DONE] - sinc cu CRITICAL_SECTION ca sa nu mai apara mesajul de la inceput ca nu poate incarca stuff
+
+[DONE] - time-ri inregistrati ca functii in Scene
+
+[DONE] - pack cu 7Zip + integrare 7Zip in proiect
+
+[DONE] - metoda prin care sa hookez new si delete si sa fac un profiling pe ce se aloca si cat se aloca
+[DONE] - adaugare delete ca si cuvant cheie
+[DONE] - adaugare destructori
+[DONE] - memory eveturile sunt stocate intr-o lista + filtre
+
+- 
+- panel prin care pot crea resursele (va include nume / array / daca sa fac mai multe / eventual de unde sa duplic - sa copii din alte surse)
+
+- sa salvez ceva infos si pentru fiecare animxml (cate frame-uri, dimensiune, etc)
+
+- la animxml sa trec dimensiunea pe information in resource vierer (w x h) + cate frames, etc
+
+- paste sa puna obiectul la cursor in animation editor
+
+- animxml - copy/cut/paste nu merg tot timpul - uneori merg / alteori nu - depinde cumva de focus - trebuie investigat
+
+- camp la fiecare resursa cu data la care a fost creata / cand a fost modificata ultima oara / cand a fost builduita ultima oara
+
+[DONE] - optiune ca sa pot sa verific cate caractere dintr-un font sunt utilizate in realitate si sa pot sa sterg pe cele care de fapt sunt in plus, respectiv sa imi selecteze automat caracterele care sunt necesare din mai multe stringuri
+
+[DONE] - verifica problema la alte limbi in framework - cel mai probabil e o problema acolo si nu randeaza cum trebuie
+
+[DONE] - adauga la fonturi un buton care sa copie caracterul curent in tab-ul de jos (cel in care scrii un text si vrei sa vezi cum se vede)
+
+[DONE] - adauga la fonturi ca in fereastra  de editare sa vezi in dreapta-sus cate glyphuri ai
+
+[DONE] - metoda automata de aliniere a caracterelor (de exemplu "g" sa fie aliniat in partea de sus a lui "a")
+
+- preview-ul de imagini sa fie mult mai flexibil (sa pot sa si calculez dimensiuni, procente, scroll bars, etc)
+
+[DONE] - la text preview (in tab-ul strings) sa pot sa pun si o imagine pe care sa o misc si sa vad cum ar arata textul peste o imagine
+
+- verifica bug in care se face un pack pe date dar pe un produs care a fost deja obtinut cu un pack si e limitat (de exemplu fac pt. marketing si apoi din proiectul facut pt. marketing mai incerc sa mai fac un pack inca o data - nu merge)
+
+[DONE] - dezvoltare suport si pentru Windows Desktop
+
+[DONE] - la Windows Desktop build config sa pot sa specific si optioni de optimizare a codului (-Ox , etc)
+
+[DONE] - la strings sa am template-uri pe care le pot folosi pentru a verifica daca un sir se potriveste bine cu un text intr-o limba. Eventual si o chestie automata ca sa pot sa ma uit unde e o problema
+
+[DONE] - la strings sa am o metoda sa convertesc in caractere ascii normale (engleza) caractere care sunt similare din alta limba (de exemplu diacriticele din limba romana)
+
+[DONE] - alignament la butoane la editor de fonturi
+
+[DONE] - constructie variabila de tipul string cu tot cu local si dimensiune predefinita local
+
+[DONE] - la build all sa te intrebe
+
+- Sa verifice daca in OnPaint sau OnUpdate faci new sau delete
+
+- Sa nu iti permita sa apelezi functii legate de evenimente (OnActiavte, OnDeactivate, etc)
+
+[DONE] - Sa poti sa stergi complete o limba
+
+- Constants/type
+
+[DONE] - template-uri pentru a putea crea mai usor un string specific unui market (de exemplu pentru Google AdMob - linkurile de vot)
+
+[DONE] - simulare de Ad in mod develop
+

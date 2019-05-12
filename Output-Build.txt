@@ -1,0 +1,10 @@
+﻿1>------ Build started: Project: GacLibrary, Configuration: Debug Any CPU ------
+1>E:\Lucru\GavApps\Framework\Current\GAppCreator\GacLibrary\Project.cs(1142,21,1142,26): warning CS0162: Unreachable code detected
+1>  GacLibrary -> E:\Lucru\GavApps\Framework\Current\GAppCreator\bin\GacCreator\GacLibrary.dll
+2>------ Build started: Project: GAppCreator, Configuration: Debug x86 ------
+3>------ Build started: Project: GacBuilder, Configuration: Debug x86 ------
+4>------ Build started: Project: Updater, Configuration: Debug x86 ------
+2>E:\Lucru\GavApps\Framework\Current\GAppCreator\GAppCreator\Form1.cs(499,13,499,17): warning CS0162: Unreachable code detected
+2>  GAppCreator -> E:\Lucru\GavApps\Framework\Current\GAppCreator\bin\GacCreator\GAppCreator.exe
+4>  Updater -> E:\Lucru\GavApps\Framework\Current\GAppCreator\bin\GacCreator\Updater.exe
+3>  GacBuilder -> E:\Lucru\GavApps\Framework\Current\GAppCreator\bin\Builder\GacBuilder.exe

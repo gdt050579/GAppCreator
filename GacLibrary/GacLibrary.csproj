@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC8DB3E1-3DDC-4887-A658-5A18FA7B760D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GacLibrary</RootNamespace>
+    <AssemblyName>GacLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\GacCreator\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PluginInterface">
+      <HintPath>..\bin\GacCreator\PluginInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ButtonActionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ButtonActionDialog.Designer.cs">
+      <DependentUpon>ButtonActionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation.cs" />
+    <Compile Include="PresentationFrame.cs" />
+    <Compile Include="PresentationObject.cs" />
+    <Compile Include="PresentationSelection.cs" />
+    <Compile Include="CounterAutoEnableStateObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CounterAutoEnableStateObject.Designer.cs">
+      <DependentUpon>CounterAutoEnableStateObject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CounterAuttoEnableStateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CounterAuttoEnableStateEditor.Designer.cs">
+      <DependentUpon>CounterAuttoEnableStateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Disk.cs" />
+    <Compile Include="ErrorsContainer.cs" />
+    <Compile Include="FontVersionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontVersionEditor.Designer.cs">
+      <DependentUpon>FontVersionEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAC2CPPConvertor.cs" />
+    <Compile Include="GACParser.cs" />
+    <Compile Include="GBitmap.cs" />
+    <Compile Include="Git.cs" />
+    <Compile Include="GraphicContext.cs" />
+    <Compile Include="GRect.cs" />
+    <Compile Include="GZipPackage.cs" />
+    <Compile Include="InAppItemsEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InAppItemsEditDialog.Designer.cs">
+      <DependentUpon>InAppItemsEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MarketStringEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MarketStringEditorDialog.Designer.cs">
+      <DependentUpon>MarketStringEditorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ResolutionEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResolutionEditorDialog.Designer.cs">
+      <DependentUpon>ResolutionEditorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceObjects.cs" />
+    <Compile Include="SettingsSnapshotControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsSnapshotControl.Designer.cs">
+      <DependentUpon>SettingsSnapshotControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsSnapshotEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsSnapshotEditDialog.Designer.cs">
+      <DependentUpon>SettingsSnapshotEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextPainter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ToDo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ButtonActionDialog.resx">
+      <DependentUpon>ButtonActionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CounterAutoEnableStateObject.resx">
+      <DependentUpon>CounterAutoEnableStateObject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CounterAuttoEnableStateEditor.resx">
+      <DependentUpon>CounterAuttoEnableStateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontVersionEditor.resx">
+      <DependentUpon>FontVersionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InAppItemsEditDialog.resx">
+      <DependentUpon>InAppItemsEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MarketStringEditorDialog.resx">
+      <DependentUpon>MarketStringEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResolutionEditorDialog.resx">
+      <DependentUpon>ResolutionEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsSnapshotControl.resx">
+      <DependentUpon>SettingsSnapshotControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsSnapshotEditDialog.resx">
+      <DependentUpon>SettingsSnapshotEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,1047 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6FE09970-84A3-422D-B972-4CB74C47AC62}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GAppCreator</RootNamespace>
+    <AssemblyName>GAppCreator</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\GacCreator\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ObjectListView">
+      <HintPath>..\..\..\..\..\..\tmp\TV\ObjectListViewDemo\Demo\bin\Debug\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET, Version=2.5.2.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <HintPath>..\bin\GacCreator\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGL, Version=2.3.0.1, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\bin\GacCreator\SharpGL.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGL.SceneGraph, Version=2.3.0.1, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\bin\GacCreator\SharpGL.SceneGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGL.WinForms, Version=2.3.0.1, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\bin\GacCreator\SharpGL.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management.Instrumentation" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3rd Party\AndroidAdMobSDK.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3rd Party\AndroidAdMobSDK.Designer.cs">
+      <DependentUpon>AndroidAdMobSDK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\AndroidChartBoostSDK.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3rd Party\AndroidChartBoostSDK.Designer.cs">
+      <DependentUpon>AndroidChartBoostSDK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\AndroidFireBaseSDK.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3rd Party\AndroidFireBaseSDK.Designer.cs">
+      <DependentUpon>AndroidFireBaseSDK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\AndroidGooglePlayServices.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3rd Party\AndroidGooglePlayServices.Designer.cs">
+      <DependentUpon>AndroidGooglePlayServices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\AndroidGoogleAnalyticsSDK.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3rd Party\AndroidGoogleAnalyticsSDK.Designer.cs">
+      <DependentUpon>AndroidGoogleAnalyticsSDK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\NewGooglePlayLeaderboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="3rd Party\NewGooglePlayLeaderboard.Designer.cs">
+      <DependentUpon>NewGooglePlayLeaderboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\SDKSettingsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3rd Party\SDKSettingsUserControl.Designer.cs">
+      <DependentUpon>SDKSettingsUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3rd Party\ThirdPartSDKConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="3rd Party\ThirdPartSDKConfig.Designer.cs">
+      <DependentUpon>ThirdPartSDKConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AndroidDeployDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AndroidDeployDialog.Designer.cs">
+      <DependentUpon>AndroidDeployDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation Object\AnimationNewTransformationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation Object\AnimationNewTransformationDialog.Designer.cs">
+      <DependentUpon>AnimationNewTransformationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation Object\AnimationObjectButtonStateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation Object\AnimationObjectButtonStateEditor.Designer.cs">
+      <DependentUpon>AnimationObjectButtonStateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation Object\AnimationObjectEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation Object\AnimationObjectEditor.Designer.cs">
+      <DependentUpon>AnimationObjectEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation Object\AnimationSimpleTransformationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation Object\AnimationSimpleTransformationDialog.Designer.cs">
+      <DependentUpon>AnimationSimpleTransformationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation Object\MoveToAnotherBranchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation Object\MoveToAnotherBranchDialog.Designer.cs">
+      <DependentUpon>MoveToAnotherBranchDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AnimationBoard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnimationBoard.Designer.cs">
+      <DependentUpon>AnimationBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation Object\AnimationObjectZOrderEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation Object\AnimationObjectZOrderEditor.Designer.cs">
+      <DependentUpon>AnimationObjectZOrderEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DateTimeDialog.Designer.cs">
+      <DependentUpon>DateTimeDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\PresentationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\PresentationEditor.designer.cs">
+      <DependentUpon>PresentationEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\PresentationFrameViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation\PresentationFrameViewer.Designer.cs">
+      <DependentUpon>PresentationFrameViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\PresentationPlayerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\PresentationPlayerDialog.designer.cs">
+      <DependentUpon>PresentationPlayerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\PresentationResourceKeyEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\PresentationResourceKeyEditorDialog.Designer.cs">
+      <DependentUpon>PresentationResourceKeyEditorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApiViewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApiViewDialog.Designer.cs">
+      <DependentUpon>ApiViewDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationTitleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationTitleDialog.Designer.cs">
+      <DependentUpon>ApplicationTitleDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BackgroundTask.cs" />
+    <Compile Include="BackgroundWorkerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseProjectContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseProjectContainer.Designer.cs">
+      <DependentUpon>BaseProjectContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicTypeConstantArrayEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicTypeConstantArrayEditDialog.Designer.cs">
+      <DependentUpon>BasicTypeConstantArrayEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckForUpdateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckForUpdateDialog.Designer.cs">
+      <DependentUpon>CheckForUpdateDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorGradient.cs" />
+    <Compile Include="ConstantEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConstantEditDialog.Designer.cs">
+      <DependentUpon>ConstantEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Counter and Alarms\AlarmEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Counter and Alarms\AlarmEditDialog.Designer.cs">
+      <DependentUpon>AlarmEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Counter and Alarms\CounterGroupEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Counter and Alarms\CounterGroupEditDialog.Designer.cs">
+      <DependentUpon>CounterGroupEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Counter and Alarms\CounterGroupSimulator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Counter and Alarms\CounterGroupSimulator.Designer.cs">
+      <DependentUpon>CounterGroupSimulator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypeFieldChangeValueTypeRefactoringDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataTypeFieldChangeValueTypeRefactoringDialog.Designer.cs">
+      <DependentUpon>DataTypeFieldChangeValueTypeRefactoringDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypeListValuesEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataTypeListValuesEditDialog.Designer.cs">
+      <DependentUpon>DataTypeListValuesEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypeSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataTypeSelectControl.Designer.cs">
+      <DependentUpon>DataTypeSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypeValuesAddDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataTypeValuesAddDialog.Designer.cs">
+      <DependentUpon>DataTypeValuesAddDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypeValuesResizeArrayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataTypeValuesResizeArrayDialog.Designer.cs">
+      <DependentUpon>DataTypeValuesResizeArrayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlIDEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ControlIDEditor.Designer.cs">
+      <DependentUpon>ControlIDEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomDataGridComponents.cs" />
+    <Compile Include="DataTypeValuesEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataTypeValuesEditControl.Designer.cs">
+      <DependentUpon>DataTypeValuesEditControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnumSelectValueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EnumSelectValueControl.Designer.cs">
+      <DependentUpon>EnumSelectValueControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnumSelectValueDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnumSelectValueDialog.Designer.cs">
+      <DependentUpon>EnumSelectValueDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitDialog.Designer.cs">
+      <DependentUpon>GitDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GoToDefinitionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GoToDefinitionDialog.Designer.cs">
+      <DependentUpon>GoToDefinitionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewSceneDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewSceneDialog.Designer.cs">
+      <DependentUpon>NewSceneDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabAnimation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabAnimation.Designer.cs">
+      <DependentUpon>ProjectTabAnimation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Counter and Alarms\ProjectTabCountersAndAlarms.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Counter and Alarms\ProjectTabCountersAndAlarms.Designer.cs">
+      <DependentUpon>ProjectTabCountersAndAlarms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourcePlugin.cs" />
+    <Compile Include="ResourcePreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResourcePreviewDialog.Designer.cs">
+      <DependentUpon>ResourcePreviewDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResourceSelectControl.Designer.cs">
+      <DependentUpon>ResourceSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringAddDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringAddDialog.Designer.cs">
+      <DependentUpon>StringAddDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringResizeArray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringResizeArray.Designer.cs">
+      <DependentUpon>StringResizeArray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringTemplateSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringTemplateSelector.Designer.cs">
+      <DependentUpon>StringTemplateSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StructureFieldEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StructureFieldEditDialog.Designer.cs">
+      <DependentUpon>StructureFieldEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicTypeConstantEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicTypeConstantEditDialog.Designer.cs">
+      <DependentUpon>BasicTypeConstantEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateImagesResourceForDifferentResolutionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateImagesResourceForDifferentResolutionsDialog.Designer.cs">
+      <DependentUpon>CreateImagesResourceForDifferentResolutionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructureEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataStructureEditDialog.Designer.cs">
+      <DependentUpon>DataStructureEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DebugCommandEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugCommandEdit.Designer.cs">
+      <DependentUpon>DebugCommandEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DebugCommandsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugCommandsDialog.Designer.cs">
+      <DependentUpon>DebugCommandsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DebugParamControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DebugParamControl.Designer.cs">
+      <DependentUpon>DebugParamControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnumEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnumEditDialog.Designer.cs">
+      <DependentUpon>EnumEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorViewerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorViewerDialog.designer.cs">
+      <DependentUpon>ErrorViewerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExecutionControlDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExecutionControlDialog.Designer.cs">
+      <DependentUpon>ExecutionControlDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontCharacterSelectorFromStrings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontCharacterSelectorFromStrings.Designer.cs">
+      <DependentUpon>FontCharacterSelectorFromStrings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontEditor.Designer.cs">
+      <DependentUpon>FontEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontGlyphCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontGlyphCreator.Designer.cs">
+      <DependentUpon>FontGlyphCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontTemplateCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontTemplateCreator.Designer.cs">
+      <DependentUpon>FontTemplateCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontTemplateSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontTemplateSelector.Designer.cs">
+      <DependentUpon>FontTemplateSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GACEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GradientEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GradientEditor.Designer.cs">
+      <DependentUpon>GradientEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HttpBuildServiceClient.cs" />
+    <Compile Include="ItemRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NewBuildDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewBuildDialog.Designer.cs">
+      <DependentUpon>NewBuildDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewImagePublishObject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewImagePublishObject.Designer.cs">
+      <DependentUpon>NewImagePublishObject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewPluginDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewPluginDialog.Designer.cs">
+      <DependentUpon>NewPluginDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewPluginObjectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewPluginObjectDialog.Designer.cs">
+      <DependentUpon>NewPluginObjectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PackageBuildDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PackageBuildDialog.Designer.cs">
+      <DependentUpon>PackageBuildDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PackageCreateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PackageCreateDialog.Designer.cs">
+      <DependentUpon>PackageCreateDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PluginsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PluginsManager.Designer.cs">
+      <DependentUpon>PluginsManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PreviewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PreviewFont.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PreviewPlugin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PreviewShader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PreviewShader.Designer.cs">
+      <DependentUpon>PreviewShader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PreviewSound.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PreviewSound.Designer.cs">
+      <DependentUpon>PreviewSound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LanguageSelectDialog.designer.cs">
+      <DependentUpon>LanguageSelectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewProjectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewProjectDialog.Designer.cs">
+      <DependentUpon>NewProjectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PreviewImage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PreviewImage.Designer.cs">
+      <DependentUpon>PreviewImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="ProjectContext.cs" />
+    <Compile Include="ProjectTabAds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabAds.Designer.cs">
+      <DependentUpon>ProjectTabAds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabConstants.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabConstants.Designer.cs">
+      <DependentUpon>ProjectTabConstants.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabEditor.Designer.cs">
+      <DependentUpon>ProjectTabEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabMain.Designer.cs">
+      <DependentUpon>ProjectTabMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabMemoryProfiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabMemoryProfiles.Designer.cs">
+      <DependentUpon>ProjectTabMemoryProfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabPublishMaterials.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabPublishMaterials.Designer.cs">
+      <DependentUpon>ProjectTabPublishMaterials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabResources.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabResources.Designer.cs">
+      <DependentUpon>ProjectTabResources.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectTabStrings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectTabStrings.Designer.cs">
+      <DependentUpon>ProjectTabStrings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceLoadDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResourceLoadDialog.Designer.cs">
+      <DependentUpon>ResourceLoadDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResourceSelectDialog.Designer.cs">
+      <DependentUpon>ResourceSelectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsDialog.Designer.cs">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShaderEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShaderEditor.Designer.cs">
+      <DependentUpon>ShaderEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SVGTemplateList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SVGTemplateList.Designer.cs">
+      <DependentUpon>SVGTemplateList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TabSelector.Designer.cs">
+      <DependentUpon>TabSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TaskDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TaskDialog.Designer.cs">
+      <DependentUpon>TaskDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateCodeGenerator.cs" />
+    <Compile Include="TemplateImages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TemplateImages.Designer.cs">
+      <DependentUpon>TemplateImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextureAtlasesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextureAtlasesDialog.Designer.cs">
+      <DependentUpon>TextureAtlasesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TranslateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TranslateDialog.Designer.cs">
+      <DependentUpon>TranslateDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewRectangle.cs" />
+    <EmbeddedResource Include="3rd Party\AndroidAdMobSDK.resx">
+      <DependentUpon>AndroidAdMobSDK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3rd Party\AndroidChartBoostSDK.resx">
+      <DependentUpon>AndroidChartBoostSDK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3rd Party\AndroidFireBaseSDK.resx">
+      <DependentUpon>AndroidFireBaseSDK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3rd Party\AndroidGooglePlayServices.resx">
+      <DependentUpon>AndroidGooglePlayServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3rd Party\AndroidGoogleAnalyticsSDK.resx">
+      <DependentUpon>AndroidGoogleAnalyticsSDK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3rd Party\NewGooglePlayLeaderboard.resx">
+      <DependentUpon>NewGooglePlayLeaderboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3rd Party\ThirdPartSDKConfig.resx">
+      <DependentUpon>ThirdPartSDKConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AndroidDeployDialog.resx">
+      <DependentUpon>AndroidDeployDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animation Object\AnimationNewTransformationDialog.resx">
+      <DependentUpon>AnimationNewTransformationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animation Object\AnimationObjectButtonStateEditor.resx">
+      <DependentUpon>AnimationObjectButtonStateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animation Object\AnimationObjectEditor.resx">
+      <DependentUpon>AnimationObjectEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animation Object\AnimationSimpleTransformationDialog.resx">
+      <DependentUpon>AnimationSimpleTransformationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animation Object\MoveToAnotherBranchDialog.resx">
+      <DependentUpon>MoveToAnotherBranchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnimationBoard.resx">
+      <DependentUpon>AnimationBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animation Object\AnimationObjectZOrderEditor.resx">
+      <DependentUpon>AnimationObjectZOrderEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DateTimeDialog.resx">
+      <DependentUpon>DateTimeDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\PresentationEditor.resx">
+      <DependentUpon>PresentationEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\PresentationFrameViewer.resx">
+      <DependentUpon>PresentationFrameViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\PresentationPlayerDialog.resx">
+      <DependentUpon>PresentationPlayerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\PresentationResourceKeyEditorDialog.resx">
+      <DependentUpon>PresentationResourceKeyEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApiViewDialog.resx">
+      <DependentUpon>ApiViewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationTitleDialog.resx">
+      <DependentUpon>ApplicationTitleDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BackgroundWorkerForm.resx">
+      <DependentUpon>BackgroundWorkerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicTypeConstantArrayEditDialog.resx">
+      <DependentUpon>BasicTypeConstantArrayEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckForUpdateDialog.resx">
+      <DependentUpon>CheckForUpdateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConstantEditDialog.resx">
+      <DependentUpon>ConstantEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Counter and Alarms\AlarmEditDialog.resx">
+      <DependentUpon>AlarmEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Counter and Alarms\CounterGroupEditDialog.resx">
+      <DependentUpon>CounterGroupEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Counter and Alarms\CounterGroupSimulator.resx">
+      <DependentUpon>CounterGroupSimulator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTypeFieldChangeValueTypeRefactoringDialog.resx">
+      <DependentUpon>DataTypeFieldChangeValueTypeRefactoringDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTypeListValuesEditDialog.resx">
+      <DependentUpon>DataTypeListValuesEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTypeSelectControl.resx">
+      <DependentUpon>DataTypeSelectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTypeValuesAddDialog.resx">
+      <DependentUpon>DataTypeValuesAddDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTypeValuesResizeArrayDialog.resx">
+      <DependentUpon>DataTypeValuesResizeArrayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlIDEditor.resx">
+      <DependentUpon>ControlIDEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTypeValuesEditControl.resx">
+      <DependentUpon>DataTypeValuesEditControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnumSelectValueControl.resx">
+      <DependentUpon>EnumSelectValueControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnumSelectValueDialog.resx">
+      <DependentUpon>EnumSelectValueDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GitDialog.resx">
+      <DependentUpon>GitDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GoToDefinitionDialog.resx">
+      <DependentUpon>GoToDefinitionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewSceneDialog.resx">
+      <DependentUpon>NewSceneDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabAnimation.resx">
+      <DependentUpon>ProjectTabAnimation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Counter and Alarms\ProjectTabCountersAndAlarms.resx">
+      <DependentUpon>ProjectTabCountersAndAlarms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourcePreviewDialog.resx">
+      <DependentUpon>ResourcePreviewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceSelectControl.resx">
+      <DependentUpon>ResourceSelectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringAddDialog.resx">
+      <DependentUpon>StringAddDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResizeArray.resx">
+      <DependentUpon>StringResizeArray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringTemplateSelector.resx">
+      <DependentUpon>StringTemplateSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructureFieldEditDialog.resx">
+      <DependentUpon>StructureFieldEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicTypeConstantEditDialog.resx">
+      <DependentUpon>BasicTypeConstantEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateImagesResourceForDifferentResolutionsDialog.resx">
+      <DependentUpon>CreateImagesResourceForDifferentResolutionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataStructureEditDialog.resx">
+      <DependentUpon>DataStructureEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DebugCommandEdit.resx">
+      <DependentUpon>DebugCommandEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DebugCommandsDialog.resx">
+      <DependentUpon>DebugCommandsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DebugParamControl.resx">
+      <DependentUpon>DebugParamControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnumEditDialog.resx">
+      <DependentUpon>EnumEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorViewerDialog.resx">
+      <DependentUpon>ErrorViewerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExecutionControlDialog.resx">
+      <DependentUpon>ExecutionControlDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontCharacterSelectorFromStrings.resx">
+      <DependentUpon>FontCharacterSelectorFromStrings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontEditor.resx">
+      <DependentUpon>FontEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontGlyphCreator.resx">
+      <DependentUpon>FontGlyphCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontTemplateCreator.resx">
+      <DependentUpon>FontTemplateCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontTemplateSelector.resx">
+      <DependentUpon>FontTemplateSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GradientEditor.resx">
+      <DependentUpon>GradientEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBuildDialog.resx">
+      <DependentUpon>NewBuildDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewImagePublishObject.resx">
+      <DependentUpon>NewImagePublishObject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewPluginDialog.resx">
+      <DependentUpon>NewPluginDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewPluginObjectDialog.resx">
+      <DependentUpon>NewPluginObjectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PackageBuildDialog.resx">
+      <DependentUpon>PackageBuildDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PackageCreateDialog.resx">
+      <DependentUpon>PackageCreateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluginsManager.resx">
+      <DependentUpon>PluginsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewFont.resx">
+      <DependentUpon>PreviewFont.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewShader.resx">
+      <DependentUpon>PreviewShader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewSound.resx">
+      <DependentUpon>PreviewSound.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageSelectDialog.resx">
+      <DependentUpon>LanguageSelectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewProjectDialog.resx">
+      <DependentUpon>NewProjectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewImage.resx">
+      <DependentUpon>PreviewImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabAds.resx">
+      <DependentUpon>ProjectTabAds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabConstants.resx">
+      <DependentUpon>ProjectTabConstants.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabEditor.resx">
+      <DependentUpon>ProjectTabEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabMain.resx">
+      <DependentUpon>ProjectTabMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabMemoryProfiles.resx">
+      <DependentUpon>ProjectTabMemoryProfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabPublishMaterials.resx">
+      <DependentUpon>ProjectTabPublishMaterials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabResources.resx">
+      <DependentUpon>ProjectTabResources.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectTabStrings.resx">
+      <DependentUpon>ProjectTabStrings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ResourceLoadDialog.resx">
+      <DependentUpon>ResourceLoadDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceSelectDialog.resx">
+      <DependentUpon>ResourceSelectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsDialog.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShaderEditor.resx">
+      <DependentUpon>ShaderEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SVGTemplateList.resx">
+      <DependentUpon>SVGTemplateList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabSelector.resx">
+      <DependentUpon>TabSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TaskDialog.resx">
+      <DependentUpon>TaskDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TemplateImages.resx">
+      <DependentUpon>TemplateImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextureAtlasesDialog.resx">
+      <DependentUpon>TextureAtlasesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TranslateDialog.resx">
+      <DependentUpon>TranslateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon_app.ico" />
+    <Content Include="ToDo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GacLibrary\GacLibrary.csproj">
+      <Project>{BC8DB3E1-3DDC-4887-A658-5A18FA7B760D}</Project>
+      <Name>GacLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginInterface\PluginInterface.csproj">
+      <Project>{554d97eb-c588-4864-b2d3-9048a7da1bfa}</Project>
+      <Name>PluginInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
