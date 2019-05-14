@@ -9598,6 +9598,24 @@ namespace GAppCreator
                 resultedRectInPixels.Width = w;
                 resultedRectInPixels.Height = h;
             }
+            private void TranslateScreenRectToScaledScreenRect(RectangleF screenRect, ref RectangleF result, bool fixedSize = false)
+            {              
+                if (fixedSize)
+                {
+                    result.Width = screenRect.Width;
+                    result.Height = screenRect.Height;
+                } else
+                {
+                    result.Width = screenRect.Width * scale;
+                    result.Height = screenRect.Height * scale;
+                }
+                result.X = screenRect.X * scale + left;
+                result.Y = screenRect.Y * scale + top;
+            }
+            private void TranslateScreenRectToScaledScreenRect(RuntimeContext rContext, ref RectangleF result, bool fixedSize = false)
+            {
+                TranslateScreenRectToScaledScreenRect(rContext.ScreenRect, ref result, fixedSize);
+            }
             private void ComputeRectOnScreen(RuntimeContext rContext, bool useImageMemberForWidth, ref RectangleF resultedRectInPixels)
             {
                 if (useImageMemberForWidth)
@@ -9657,6 +9675,8 @@ namespace GAppCreator
                     ComputeRectInPercentages(rContext.X_Percentage, rContext.Y_Percentage, rContext.WidthInPixels, rContext.HeightInPixels, rContext.Align, ref resultedRectInPercentages, false, rContext.ScaleWidth, rContext.ScaleHeight);
             }
 
+
+
             #region General Settings
             public void SetGraphics(Graphics g)
             {
@@ -9685,27 +9705,46 @@ namespace GAppCreator
             //    resultedImageRect.Width = (int)(imageRect.Width / scale);
             //    resultedImageRect.Height = (int)(imageRect.Height / scale);
             //}
-            public void DrawImage(Image img, float x, float y, Alignament align, uint ColorBlending = 0xFFFFFFFF, float scaleWidth = 1.0f, float scaleHeight = 1.0f)
+            //public void DrawImage_(Image img, float x, float y, Alignament align, uint ColorBlending = 0xFFFFFFFF, float scaleWidth = 1.0f, float scaleHeight = 1.0f)
+            //{
+            //    if (internalGraphics == null)
+            //        return;
+            //    if (img == null)
+            //        return;
+            //    ComputeRectOnScreen(x, y, img.Width, img.Height, align, ref tempRectF, false, scaleWidth, scaleHeight);
+            //    cm.Matrix00 = ((float)((ColorBlending >> 16) & 0xFF)) / 255.0f; // RED
+            //    cm.Matrix11 = ((float)((ColorBlending >> 8) & 0xFF)) / 255.0f; // GREEN
+            //    cm.Matrix22 = ((float)((ColorBlending >> 0) & 0xFF)) / 255.0f; // BLUE 
+            //    cm.Matrix33 = ((float)((ColorBlending >> 24) & 0xFF)) / 255.0f; // ALPHA                
+            //    imageAttributes.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+            //    imageRect.X = (int)tempRectF.X;
+            //    imageRect.Y = (int)tempRectF.Y;
+            //    imageRect.Width = (int)tempRectF.Width;
+            //    imageRect.Height = (int)tempRectF.Height;
+            //    internalGraphics.DrawImage(img, imageRect, 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imageAttributes);
+            //}
+            public void DrawImage(Image img, RectangleF screenPozition, uint ColorBlending = 0xFFFFFFFF)
             {
                 if (internalGraphics == null)
                     return;
                 if (img == null)
                     return;
-                ComputeRectOnScreen(x, y, img.Width, img.Height, align, ref tempRectF, false, scaleWidth, scaleHeight);
+                TranslateScreenRectToScaledScreenRect(screenPozition, ref tempRectF, false);
+                imageRect.X = (int)tempRectF.X;
+                imageRect.Y = (int)tempRectF.Y;
+                imageRect.Width = (int)tempRectF.Width;
+                imageRect.Height = (int)tempRectF.Height;
                 cm.Matrix00 = ((float)((ColorBlending >> 16) & 0xFF)) / 255.0f; // RED
                 cm.Matrix11 = ((float)((ColorBlending >> 8) & 0xFF)) / 255.0f; // GREEN
                 cm.Matrix22 = ((float)((ColorBlending >> 0) & 0xFF)) / 255.0f; // BLUE 
                 cm.Matrix33 = ((float)((ColorBlending >> 24) & 0xFF)) / 255.0f; // ALPHA                
                 imageAttributes.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                imageRect.X = (int)tempRectF.X;
-                imageRect.Y = (int)tempRectF.Y;
-                imageRect.Width = (int)tempRectF.Width;
-                imageRect.Height = (int)tempRectF.Height;
                 internalGraphics.DrawImage(img, imageRect, 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, imageAttributes);
             }
             public void DrawImage(RuntimeContext rContext)
             {
-                DrawImage(rContext.Image, rContext.X_Percentage, rContext.Y_Percentage, rContext.Align, rContext.ColorBlending, rContext.ScaleWidth, rContext.ScaleHeight);
+                DrawImage(rContext.Image, rContext.ScreenRect, rContext.ColorBlending);
+                //DrawImage(rContext.Image, rContext.X_Percentage, rContext.Y_Percentage, rContext.Align, rContext.ColorBlending, rContext.ScaleWidth, rContext.ScaleHeight);
             }
             public void FillScreen(Image img)
             {
@@ -9736,6 +9775,30 @@ namespace GAppCreator
             public void ClearScreen(int aRGB)
             {
                 DrawRect(0, 0, 1, 1, Alignament.TopLeft, 0, aRGB, 0);
+            }
+
+
+            public void DrawRect(RectangleF screenPozition, int borderColor, int fillColor, float penWidth, bool fixedSize = false)
+            {
+                if (internalGraphics == null)
+                    return;
+                TranslateScreenRectToScaledScreenRect(screenPozition, ref tempRectF, fixedSize);
+
+                if (fillColor != 0) // color.Transparent
+                {
+                    tempBrush.Color = System.Drawing.Color.FromArgb(fillColor);
+                    internalGraphics.FillRectangle(tempBrush, tempRectF);
+                }
+                if ((borderColor != 0) && (penWidth > 0))
+                {
+                    tempPen.Color = System.Drawing.Color.FromArgb(borderColor);
+                    tempPen.Width = penWidth;
+                    internalGraphics.DrawRectangle(tempPen, tempRectF.X, tempRectF.Y, tempRectF.Width, tempRectF.Height);
+                }
+            }
+            public void DrawRect(RuntimeContext rContext, int borderColor, int fillColor, float penWidth, bool fixedSize = false)
+            {
+                DrawRect(rContext.ScreenRect, borderColor, fillColor, penWidth, fixedSize);
             }
 
             public void DrawRect(float x, float y, float rectWithInPixels, float rectHeightInPixels, Alignament align, int borderColor, int fillColor, float penWidth, float scaleWidth = 1, float scaleHeight = 1, bool fixedSize = false)
@@ -9770,7 +9833,7 @@ namespace GAppCreator
 
             public void FillRect(RuntimeContext rContext)
             {
-                DrawRect(rContext.ScreenRect.Left, rContext.ScreenRect.Left, rContext.WidthInPixels, rContext.HeightInPixels, rContext.Align, 0, (int)rContext.ColorBlending, 0, rContext.ScaleWidth, rContext.ScaleHeight, false);
+                DrawRect(rContext, 0, (int)rContext.ColorBlending, 0);
             }
 
             public void FillExclusionRect(RuntimeContext rContext)
@@ -14227,47 +14290,73 @@ namespace GAppCreator
 
             }
             public virtual bool IsFullScreen() { return false; }
-            public void ComputeScreenRect(float screenWidthInPixels,float screenHeightInPixels)
+            public static void ComputeScreenRect(float percentage_X, float percentage_y, float widthInPixels, float heightInPixels, float scaleWidth, float scaleHeight, Alignament align, float parentLeftInPixels, float parentTopInPixels, float parentWidth, float parentHeight, ref RectangleF result)
+            {
+                float x = percentage_X * parentWidth + parentLeftInPixels;
+                float y = percentage_y * parentHeight + parentTopInPixels;
+                widthInPixels *= scaleWidth;
+                heightInPixels *= scaleHeight;
+                switch (align)
+                {
+                    case Alignament.Center: x -= widthInPixels / 2.0f; y -= heightInPixels / 2.0f; break;
+                    case Alignament.TopLeft: break;
+                    case Alignament.TopCenter: x -= widthInPixels / 2.0f; break;
+                    case Alignament.TopRight: x -= widthInPixels; break;
+                    case Alignament.RightCenter: x -= widthInPixels; y -= heightInPixels / 2.0f; break;
+                    case Alignament.BottomRight: x -= widthInPixels; y -= heightInPixels; break;
+                    case Alignament.BottomCenter: x -= widthInPixels / 2.0f; y -= heightInPixels; break;
+                    case Alignament.BottomLeft: y -= heightInPixels; break;
+                    case Alignament.LeftCenter: y -= heightInPixels / 2.0f; break;
+                }
+                result.X = x;
+                result.Y = y;
+                result.Width = widthInPixels;
+                result.Height = heightInPixels;
+            }
+            public static void ComputeScreenRect(float percentage_X, float percentage_y, float widthInPixels, float heightInPixels, float scaleWidth, float scaleHeight, Alignament align, RectangleF parent, ref RectangleF result)
+            {
+                ComputeScreenRect(percentage_X, percentage_y, widthInPixels, heightInPixels, scaleWidth, scaleHeight, align, parent.Left, parent.Top, parent.Width, parent.Height, ref result);
+            }
+            public static void ComputeScreenRect(RuntimeContext rContext, bool useImage, RectangleF parent)
             {
                 float w, h;
+                if (useImage)
+                {
+                    if (rContext.Image != null)
+                    {
+                        w = rContext.Image.Width;
+                        h = rContext.Image.Height;
+                    } else
+                    {
+                        w = 0;
+                        h = 0;
+                    }
+                } else
+                {
+                    w = rContext.WidthInPixels;
+                    h = rContext.HeightInPixels;
+                }
+                ComputeScreenRect(rContext.X_Percentage, rContext.Y_Percentage, w, h, rContext.ScaleWidth, rContext.ScaleHeight, rContext.Align, parent.Left, parent.Top, parent.Width, parent.Height, ref rContext.ScreenRect);
+            }
+
+            public void ComputeScreenRect(float screenWidthInPixels,float screenHeightInPixels)
+            {
+                float w, h, s_w, s_h;
                 if (IsFullScreen())
                 {
                     w = screenWidthInPixels;
                     h = screenHeightInPixels;
-                } else
-                {
-                    w = GetWidthInPixels() * this.ExecutionContext.ScaleWidth ;
-                    h = GetHeightInPixels() * this.ExecutionContext.ScaleHeight;
+                    s_w = s_h = 1.0f;
                 }
-                float x = ExecutionContext.X_Percentage;
-                float y = ExecutionContext.Y_Percentage;
+                else
+                {
+                    w = GetWidthInPixels(); s_w = this.ExecutionContext.ScaleWidth;
+                    h = GetHeightInPixels(); s_h = this.ExecutionContext.ScaleHeight;
+                }
                 if (this.ParentElement != null)
-                {
-                    x *= this.ParentElement.ExecutionContext.ScreenRect.Width;
-                    y *= this.ParentElement.ExecutionContext.ScreenRect.Height;
-                    x += this.ParentElement.ExecutionContext.ScreenRect.Left;
-                    y += this.ParentElement.ExecutionContext.ScreenRect.Top;
-                } else
-                {
-                    x *= screenWidthInPixels;
-                    y *= screenHeightInPixels;
-                }
-                switch (this.ExecutionContext.Align)
-                {
-                    case Alignament.Center: x -= w / 2.0f; y -= h / 2.0f; break;
-                    case Alignament.TopLeft: break;
-                    case Alignament.TopCenter: x -= w / 2.0f; break;
-                    case Alignament.TopRight: x -= w; break;
-                    case Alignament.RightCenter: x -= w; y -= h / 2.0f; break;
-                    case Alignament.BottomRight: x -= w; y -= h; break;
-                    case Alignament.BottomCenter: x -= w / 2.0f; y -= h; break;
-                    case Alignament.BottomLeft: y -= h; break;
-                    case Alignament.LeftCenter: y -= h / 2.0f; break;
-                }
-                this.ExecutionContext.ScreenRect.X = x;
-                this.ExecutionContext.ScreenRect.Y = y;
-                this.ExecutionContext.ScreenRect.Width = w;
-                this.ExecutionContext.ScreenRect.Height = h;
+                    ComputeScreenRect(ExecutionContext.X_Percentage, ExecutionContext.Y_Percentage, w, h, s_w, s_h, ExecutionContext.Align, this.ParentElement.ExecutionContext.ScreenRect, ref ExecutionContext.ScreenRect);
+                else
+                    ComputeScreenRect(ExecutionContext.X_Percentage, ExecutionContext.Y_Percentage, w, h, s_w, s_h, ExecutionContext.Align, 0, 0, screenWidthInPixels, screenHeightInPixels, ref ExecutionContext.ScreenRect);
             }
             public void UpdateFromScreenRect(float leftInPixels, float topInPixels, float widthInPixels, float HeightInPixels, float screenWidthInPixels, float screenHeightInPixels)
             {
@@ -16014,18 +16103,14 @@ namespace GAppCreator
                     if (compRectColor != 0)
                         c.DrawObjectRect(ExecutionContext, false, compRectColor);
                 }
-                float originalX, originalY;
+
 
                 // simbol
-                originalX = symbolExecutionContext.X_Percentage;
-                originalY = symbolExecutionContext.Y_Percentage;
-                symbolExecutionContext.X_Percentage = symbolExecutionContext.X_Percentage * tempRect.Width + tempRect.Left;
-                symbolExecutionContext.Y_Percentage = symbolExecutionContext.Y_Percentage * tempRect.Height + tempRect.Top;
+                GenericElement.ComputeScreenRect(symbolExecutionContext, true, ExecutionContext.ScreenRect);
                 c.DrawImage(symbolExecutionContext);
                 if (compRectColor != 0)
                     c.DrawObjectRect(symbolExecutionContext, true, compRectColor);
-                symbolExecutionContext.X_Percentage = originalX;
-                symbolExecutionContext.Y_Percentage = originalY;
+
 
 
                 // text
@@ -16359,6 +16444,31 @@ namespace GAppCreator
             private RuntimeContext textExecutionContext = new RuntimeContext();
 
             private RectangleF tempRect = new RectangleF();
+
+            protected override float GetWidthInPixels()
+            {
+                if (BackgroundStyle == SimpleButtonBackgroundStyle.Image)
+                {
+                    if (FaceNormal.Background != null)
+                        return FaceNormal.Background.Width;
+                    else
+                        return 0;
+                }
+                else
+                    return this.Width;
+            }
+            protected override float GetHeightInPixels()
+            {
+                if (BackgroundStyle == SimpleButtonBackgroundStyle.Image)
+                {
+                    if (FaceNormal.Background != null)
+                        return FaceNormal.Background.Height;
+                    else
+                        return 0;
+                }
+                else
+                    return this.Height;
+            }
 
             protected override void SetPositionAndSize(float x_percentage, float y_percantage, float unscaled_widthInPixels, float unscaled_heightInPixels, float scaledWidth, float scaleHeight)
             {

@@ -64,6 +64,10 @@ namespace GAppCreator
             canvas.SetScreen(0, 0, previewPanel.Width, previewPanel.Height, 1.0f);
             executionContext.WidthInPixels = rectWidth;
             executionContext.HeightInPixels = rectHeight;
+            executionContext.ScreenRect.X = previewPanel.Width / 2 - rectWidth / 2;
+            executionContext.ScreenRect.Y = previewPanel.Height / 2 - rectHeight / 2;
+            executionContext.ScreenRect.Width = rectWidth;
+            executionContext.ScreenRect.Height = rectHeight;
             btn.InitRuntimeContext(executionContext, symbolExecutionContext,textExecutionContext, backStyle);
             AnimO.ButtonFaceContainer.Paint(canvas, tempRect, executionContext, symbolExecutionContext,textExecutionContext, btn.tp, backStyle, marginColor);
             //btn.Paint(canvas, executionContext,tempRect,cScale,rectWidth/previewPanel.Width,rectHeight/previewPanel.Height,backStyle);
