@@ -9840,7 +9840,8 @@ namespace GAppCreator
             {
                 if (internalGraphics == null)
                     return;
-                ComputeRectOnScreen(rContext, false, ref tempRectF);
+                //ComputeRectOnScreen(rContext, false, ref tempRectF);
+                TranslateScreenRectToScaledScreenRect(rContext, ref tempRectF, false);
 
                 brush.Color = Color.FromArgb((int)rContext.ColorBlending);
                 int l = (int)tempRectF.Left;
