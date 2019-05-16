@@ -16112,36 +16112,8 @@ namespace GAppCreator
                 if (compRectColor != 0)
                     c.DrawObjectRect(symbolExecutionContext, true, compRectColor);
 
-
-
-                // text
-                float xp, yp, w, h;
-                xp = textExecutionContext.X_Percentage * tempRect.Width + tempRect.Left;
-                yp = textExecutionContext.Y_Percentage * tempRect.Height + tempRect.Top;
-                w = textExecutionContext.WidthInPixels * textExecutionContext.ScaleWidth;
-                h = textExecutionContext.HeightInPixels * textExecutionContext.ScaleHeight;
-                if (compRectColor != 0)
-                    c.DrawRect(xp, yp, w, h, textExecutionContext.Align, compRectColor, 0, 1);
-                xp = xp * c.GetWidth()/c.GetScale();
-                yp = yp * c.GetHeight()/c.GetScale();
-
-                //w *= scale;
-                //h *= scale;
-                // in functie de alignament
-                switch (textExecutionContext.Align)
-                {
-                    case Alignament.Center: xp -= w / 2; yp -= h / 2; break;
-                    case Alignament.TopLeft: break;
-                    case Alignament.TopCenter: xp -= w / 2; break;
-                    case Alignament.TopRight: xp -= w; break;
-                    case Alignament.RightCenter: xp -= w; yp -= h / 2; break;
-                    case Alignament.BottomRight: xp -= w; yp -= h; break;
-                    case Alignament.BottomCenter: xp -= w / 2; yp -= h; break;
-                    case Alignament.BottomLeft: yp -= h; break;
-                    case Alignament.LeftCenter: yp -= h / 2; break;
-                }
-
-                tp.SetPosition(xp, yp, xp + w, yp + h);
+                GenericElement.ComputeScreenRect(textExecutionContext, true, ExecutionContext.ScreenRect);
+                tp.SetPosition(textExecutionContext.ScreenRect.Left, textExecutionContext.ScreenRect.Top, textExecutionContext.ScreenRect.Right, textExecutionContext.ScreenRect.Bottom);
                 tp.SetFontSize(TextPainter.FontSizeMethod.Scale, textExecutionContext.ScaleWidth);
                 tp.SetBlending(BlendingMode.ColorBlending, (int)textExecutionContext.ColorBlending, 1.0f);
                 tp.Paint(c, GenericElement.CurrentAppResources);

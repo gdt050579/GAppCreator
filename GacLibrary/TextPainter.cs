@@ -738,19 +738,24 @@ namespace GAppCreator
                 {
                     //g.g.DrawImage(gl.Image, gl.x, gl.y, gl.w, gl.h);
                     rc.Image = gl.Image;
-                    rc.X_Percentage = canvas.ConvertXAxisToPercentage(gl.x) * canvas.GetScale();
-                    rc.Y_Percentage = canvas.ConvertYAxisToPercentage(gl.y) * canvas.GetScale();
+                    //rc.X_Percentage = canvas.ConvertXAxisToPercentage(gl.x) * canvas.GetScale();
+                    //rc.Y_Percentage = canvas.ConvertYAxisToPercentage(gl.y) * canvas.GetScale();
                     rc.Align = Alignament.TopLeft;
 
-                    if (this.fontSizeMethod == FontSizeMethod.Scale)
-                    {
-                        rc.ScaleWidth = rc.ScaleHeight = this.FontSizeValue;
-                    }
-                    else
-                    {
-                        rc.ScaleWidth = gl.w / (float)rc.Image.Width;
-                        rc.ScaleHeight = gl.h / (float)rc.Image.Height;
-                    }
+                    //if (this.fontSizeMethod == FontSizeMethod.Scale)
+                    //{
+                    //    rc.ScaleWidth = rc.ScaleHeight = this.FontSizeValue;
+                    //}
+                    //else
+                    //{
+                    //    rc.ScaleWidth = gl.w / (float)rc.Image.Width;
+                    //    rc.ScaleHeight = gl.h / (float)rc.Image.Height;
+                    //}
+                    rc.ScreenRect.X = gl.x;
+                    rc.ScreenRect.Y = gl.y;
+                    rc.ScreenRect.Width = gl.w;
+                    rc.ScreenRect.Height = gl.h;
+                    rc.ScaleWidth = rc.ScaleHeight = 1.0f; // safety
 
                     canvas.DrawImage(rc);
                 }

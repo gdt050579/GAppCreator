@@ -1006,7 +1006,7 @@ namespace GAppCreator
             canvas.ClearClipping();
             UpdateElementsRelativePosition();
             // GDT: Se parcurg toate, apoi se calculeaza pozitiile pentru fiecare (procentuale) - apoi la desenare se deseneaza pe baza pozitiilor relative
-            float tempX = 0, tempY = 0;
+            //float tempX = 0, tempY = 0;
             foreach (var elem in ZOrder)
             {
                 //if (elem.ParentElement != null)
