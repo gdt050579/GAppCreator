@@ -298,7 +298,8 @@ namespace GAppCreator
             #region Rectangle Functions
             public void ClearScreen(int aRGB)
             {
-                DrawRect(0, 0, 1, 1, Alignament.TopLeft, 0, aRGB, 0);
+                //DrawRect(0, 0, 1, 1, Alignament.TopLeft, 0, aRGB, 0);
+                DrawRectWithPixelsCoordonates(0, 0, width, height, 0, aRGB, 0);
             }
 
 
@@ -325,34 +326,27 @@ namespace GAppCreator
                 DrawRect(rContext.ScreenRect, borderColor, fillColor, penWidth, fixedSize);
             }
 
-            public void DrawRect(float x, float y, float rectWithInPixels, float rectHeightInPixels, Alignament align, int borderColor, int fillColor, float penWidth, float scaleWidth = 1, float scaleHeight = 1, bool fixedSize = false)
+            public void DrawRectWithPixelsCoordonates(int left, int top, int right, int bottom, int borderColor, int fillColor, int penWidth)
             {
+                //DrawRect(ConvertXAxisToPercentage(left), ConvertYAxisToPercentage(top), right - left, bottom - top, Alignament.TopLeft, borderColor, fillColor, penWidth);
                 if (internalGraphics == null)
                     return;
-                ComputeRectOnScreen(x, y, rectWithInPixels, rectHeightInPixels, align, ref tempRectF, fixedSize, scaleWidth, scaleHeight);
-
                 if (fillColor != 0) // color.Transparent
                 {
                     tempBrush.Color = System.Drawing.Color.FromArgb(fillColor);
-                    internalGraphics.FillRectangle(tempBrush, tempRectF);
+                    internalGraphics.FillRectangle(tempBrush, left, top, right - left, bottom - top);
                 }
                 if ((borderColor != 0) && (penWidth > 0))
                 {
                     tempPen.Color = System.Drawing.Color.FromArgb(borderColor);
                     tempPen.Width = penWidth;
-                    internalGraphics.DrawRectangle(tempPen, tempRectF.X, tempRectF.Y, tempRectF.Width, tempRectF.Height);
+                    internalGraphics.DrawRectangle(tempPen, left, top, right - left, bottom - top);
                 }
             }
-            public void DrawRectWithPixelsCoordonates(int left, int top, int right, int bottom, int borderColor, int fillColor, int penWidth)
+
+            public void DrawObjectRect(RuntimeContext rContext, int borderColor)
             {
-                DrawRect(ConvertXAxisToPercentage(left), ConvertYAxisToPercentage(top), right - left, bottom - top, Alignament.TopLeft, borderColor, fillColor, penWidth);
-            }
-            public void DrawObjectRect(RuntimeContext rContext, bool useImageForWidth, int borderColor)
-            {
-                if ((useImageForWidth) && (rContext.Image != null))
-                    this.DrawRect(rContext.X_Percentage, rContext.Y_Percentage, rContext.Image.Width, rContext.Image.Height, rContext.Align, borderColor, 0, 1, rContext.ScaleWidth, rContext.ScaleHeight);
-                else
-                    this.DrawRect(rContext.X_Percentage, rContext.Y_Percentage, rContext.WidthInPixels, rContext.HeightInPixels, rContext.Align, borderColor, 0, 1, rContext.ScaleWidth, rContext.ScaleHeight);
+                this.DrawRect(rContext, borderColor, 0, 1);
             }
 
             public void FillRect(RuntimeContext rContext)
@@ -5879,6 +5873,10 @@ namespace GAppCreator
 
             #region Virtual Functions
             private List<Bitmap> internalImages = new List<Bitmap>();
+            public override bool IsFullScreen()
+            {
+                return true;
+            }
             protected override string GetDescription()
             {
                 return "Surface color: " + Color.FromArgb(ColorBlending).ToString();
@@ -5898,7 +5896,7 @@ namespace GAppCreator
             }
             public override void OnPaint(Canvas c, float deviceWidth, float deviceHeight, BoardViewMode viewMode)
             {
-                c.DrawRect(0, 0, c.GetWidth(), c.GetHeight(), Alignament.TopLeft, 0, (int)ExecutionContext.ColorBlending, 0);
+                c.DrawRect(ExecutionContext, 0,(int)ExecutionContext.ColorBlending, 0);
             }
             public override string Validate(Project prj, AppResources resources)
             {
@@ -6634,14 +6632,14 @@ namespace GAppCreator
                     c.DrawImage(ExecutionContext);
                     c.ComputeRectInPercentages(ExecutionContext, true, ref tempRect);
                     if (compRectColor != 0)
-                        c.DrawObjectRect(ExecutionContext, true, compRectColor);
+                        c.DrawObjectRect(ExecutionContext, compRectColor);
                 }
                 else
                 {
                     c.FillRect(ExecutionContext);
                     c.ComputeRectInPercentages(ExecutionContext, false, ref tempRect);
                     if (compRectColor != 0)
-                        c.DrawObjectRect(ExecutionContext, false, compRectColor);
+                        c.DrawObjectRect(ExecutionContext,compRectColor);
                 }
 
 
@@ -6649,7 +6647,7 @@ namespace GAppCreator
                 GenericElement.ComputeScreenRect(symbolExecutionContext, true, ExecutionContext.ScreenRect);
                 c.DrawImage(symbolExecutionContext);
                 if (compRectColor != 0)
-                    c.DrawObjectRect(symbolExecutionContext, true, compRectColor);
+                    c.DrawObjectRect(symbolExecutionContext, compRectColor);
 
                 GenericElement.ComputeScreenRect(textExecutionContext, true, ExecutionContext.ScreenRect);
                 tp.SetPosition(textExecutionContext.ScreenRect.Left, textExecutionContext.ScreenRect.Top, textExecutionContext.ScreenRect.Right, textExecutionContext.ScreenRect.Bottom);
