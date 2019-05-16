@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimO.cs" />
     <Compile Include="ButtonActionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
