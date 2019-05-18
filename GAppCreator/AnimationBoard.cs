@@ -454,6 +454,8 @@ namespace GAppCreator
             BoardYToScreen,
             BoardXToBoardPercentage,
             BoardYToBoardPercentage,
+            MouseXToBoardX,
+            MouseYToBoardY,
         }
         enum MouseLockType
         {
@@ -521,6 +523,9 @@ namespace GAppCreator
         #endregion
 
         #region Delegates and Events
+
+        public delegate void OnClickOutsideSelectionDelegate(AnimO.Canvas canvas, float x_pixels, float y_pixels);
+        public event OnClickOutsideSelectionDelegate OnClickOutsideSelection = null;
 
         public delegate void OnPaintCanvasDelegate(AnimO.Canvas canvas);
         public event OnPaintCanvasDelegate OnPaintCanvas = null;
@@ -619,6 +624,12 @@ namespace GAppCreator
                 case ConvertCoordType.BoardYToScreen: 
                     value =  ((value - offsetY) * ((float)previewScale)) / 100.0f;
                     return value;
+                case ConvertCoordType.MouseXToBoardX:
+                    value = ((value + offsetX) * ((float)previewScale)) / 100.0f;
+                    return value;
+                case ConvertCoordType.MouseYToBoardY:
+                    value = ((value + offsetY) * ((float)previewScale)) / 100.0f;
+                    return value;
                 case ConvertCoordType.ScreenXToBoard:
                 case ConvertCoordType.ScreenXToBoardWithoutAlignament:
                     value = offsetX + (value * 100.0f / (float)previewScale);
@@ -673,6 +684,19 @@ namespace GAppCreator
                     Redraw();
                     if (OnSelectionBegins != null)
                         OnSelectionBegins(canvas);
+                } else
+                {
+                    if (OnClickOutsideSelection != null)
+                    {
+                        OnClickOutsideSelection(canvas, ConvertCoord(e.X, ConvertCoordType.MouseXToBoardX), ConvertCoord(e.Y, ConvertCoordType.MouseYToBoardY));
+                        if (selection.OnMouseDown(ConvertCoord(e.X, ConvertCoordType.ScreenXToBoardWithoutAlignament), ConvertCoord(e.Y, ConvertCoordType.ScreenYToBoardWithoutAlignament), AlignToGrid))
+                        {
+                            MouseLock = MouseLockType.Select;
+                            Redraw();
+                            if (OnSelectionBegins != null)
+                                OnSelectionBegins(canvas);
+                        }
+                    }
                 }
                 return;
             }

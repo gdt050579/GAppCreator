@@ -61,7 +61,7 @@ namespace GAppCreator
             board.OnSelectionChanged += board_OnSelectionChanged;
             board.OnSelectionBegins += board_OnSelectionBegins;
             board.OnSelectionEnds += board_OnSelectionEnds;
-
+            board.OnClickOutsideSelection += Board_OnClickOutsideSelection;
             SetDisplayMode(AnimO.BoardViewMode.Design);
 
             lstElements = new GListView();            
@@ -89,6 +89,8 @@ namespace GAppCreator
 
         }
 
+
+
         void SetDisplayMode(AnimO.BoardViewMode mode)
         {
             lbDisplayMode.Text = "Disply: " + mode.ToString();
@@ -105,30 +107,33 @@ namespace GAppCreator
         {            
         }
 
-        private float ConvertXCoordsToPixels(float value, AnimO.Coordinates coord)
+        private void Board_OnClickOutsideSelection(AnimO.Canvas canvas, float x_pixels, float y_pixels)
         {
-            if (coord == AnimO.Coordinates.Percentage)
-                value = value * deviceSize.Width;
-            return value;
+            UpdateElementsRelativePosition();
+            var selected_object = propElement.SelectedObject as AnimO.GenericElement;
+            AnimO.GenericElement toSelect = null;
+            foreach (var elem in ZOrder)
+            {
+                if ((elem.ExecutionContext.ScreenRect.Contains(x_pixels,y_pixels)) && (elem._ShowInBoardAnimation_))
+                {
+                    toSelect = elem;
+                }
+            }
+            if (toSelect != null)
+            {
+                lstElements.SelectObjectFromList(toSelect);
+                propElement.SelectedObject = toSelect;
+                SelectCurrentElementInBoard();
+            }
+            else
+            {
+                lstElements.SelectObjectFromList(null);
+                propElement.SelectedObject = null;
+                propElement.SelectedObjects = null;
+                board.ClearSelection();
+            }
         }
-        private float ConvertYCoordsToPixels(float value, AnimO.Coordinates coord)
-        {
-            if (coord == AnimO.Coordinates.Percentage)
-                value = value * deviceSize.Height;
-            return value;
-        }
-        private float ConvertPixelsToXCoord(float value, AnimO.Coordinates coord)
-        {
-            if (coord == AnimO.Coordinates.Percentage)
-                value = value / deviceSize.Width;
-            return value;
-        }
-        private float ConvertPixelsToYCoord(float value, AnimO.Coordinates coord)
-        {
-            if (coord == AnimO.Coordinates.Percentage)
-                value = value / deviceSize.Height;
-            return value;
-        }
+
 
         void board_OnSelectionChanged(AnimO.Canvas canvas)
         {
