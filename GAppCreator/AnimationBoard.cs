@@ -858,6 +858,23 @@ namespace GAppCreator
             selection.Clear();
             Redraw();
         }
+        public void Create_ObjectToMoveAndResizeSelection(RectangleF r, Alignament _a)
+        {
+            float x = 0, y = 0;
+            switch (_a)
+            {
+                case Alignament.TopLeft: x = r.Left; y = r.Top; break;
+                case Alignament.TopCenter: x = r.Left + r.Width / 2; y = r.Top; break;
+                case Alignament.TopRight: x = r.Left + r.Width; y = r.Top; break;
+                case Alignament.RightCenter:x = r.Left + r.Width; y = r.Top + r.Height / 2; break;
+                case Alignament.BottomRight: x = r.Left + r.Width; y = r.Top + r.Height; break;
+                case Alignament.BottomCenter: x = r.Left + r.Width / 2; y = r.Top + r.Height; break;
+                case Alignament.BottomLeft: x = r.Left; y = r.Top + r.Height; break;
+                case Alignament.LeftCenter: x = r.Left; y = r.Top + r.Height / 2; break;
+                case Alignament.Center: x = r.Left + r.Width / 2; y = r.Top + r.Height / 2; break;
+            }
+            Create_ObjectToMoveAndResizeSelection(x, y, r.Width, r.Height, _a);
+        }
         public void Create_ObjectToMoveAndResizeSelection(float x, float y, float width, float height, Alignament _a)
         {
             selection.Create_ObjectToMoveAndResizeSelection(x, y, width, height, _a);

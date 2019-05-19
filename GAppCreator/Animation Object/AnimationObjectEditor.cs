@@ -163,7 +163,8 @@ namespace GAppCreator
                 else
                 {
                     RectangleF rf = selected_object.ExecutionContext.ScreenRect;
-                    board.Create_ObjectToMoveAndResizeSelection(rf.Left, rf.Top, rf.Width, rf.Height, Alignament.TopLeft);
+                    //board.Create_ObjectToMoveAndResizeSelection(rf.Left, rf.Top, rf.Width, rf.Height, Alignament.TopLeft);
+                    board.Create_ObjectToMoveAndResizeSelection(rf, selected_object.ExecutionContext.Align);
                 }
             }
         }
