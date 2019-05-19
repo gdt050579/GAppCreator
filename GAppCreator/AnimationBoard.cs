@@ -625,10 +625,10 @@ namespace GAppCreator
                     value =  ((value - offsetY) * ((float)previewScale)) / 100.0f;
                     return value;
                 case ConvertCoordType.MouseXToBoardX:
-                    value = ((value + offsetX) * ((float)previewScale)) / 100.0f;
+                    value = ((value + ((offsetX * ((float)previewScale)) / 100.0f)) * 100.0f) / ((float)previewScale);
                     return value;
                 case ConvertCoordType.MouseYToBoardY:
-                    value = ((value + offsetY) * ((float)previewScale)) / 100.0f;
+                    value = ((value + ((offsetY * ((float)previewScale)) / 100.0f)) * 100.0f) / ((float)previewScale);
                     return value;
                 case ConvertCoordType.ScreenXToBoard:
                 case ConvertCoordType.ScreenXToBoardWithoutAlignament:
