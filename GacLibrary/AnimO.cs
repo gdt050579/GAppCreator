@@ -282,7 +282,8 @@ namespace GAppCreator
             {
                 if (internalGraphics == null)
                     return;
-                ComputeRectOnScreen(rContext, false, ref tempRectF);
+                TranslateScreenRectToScaledScreenRect(rContext, ref tempRectF, false);
+                //ComputeRectOnScreen(rContext, false, ref tempRectF);
                 internalGraphics.SetClip(tempRectF);
             }
             public void ClearClipping(Graphics g)
@@ -6068,6 +6069,13 @@ namespace GAppCreator
         public class ClipRectangleElement : GenericElementWithPositionAndSize
         {
             #region Virtual Functions
+            protected override void SetPositionAndSize(float x_percentage, float y_percantage, float unscaled_widthInPixels, float unscaled_heightInPixels, float scaledWidth, float scaleHeight)
+            {
+                this.X = x_percentage;
+                this.Y = y_percantage;
+                this.Width = unscaled_widthInPixels;
+                this.Height = unscaled_heightInPixels;
+            }
             public override string GetIconKey()
             {
                 return "__ClipRect__";
