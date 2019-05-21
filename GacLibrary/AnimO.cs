@@ -18,6 +18,7 @@ namespace GAppCreator
 {
     namespace AnimO
     {
+        #region Canvas and RuntinmeContext
         public enum BoardViewMode
         {
             Design,
@@ -283,7 +284,6 @@ namespace GAppCreator
                 if (internalGraphics == null)
                     return;
                 TranslateScreenRectToScaledScreenRect(rContext, ref tempRectF, false);
-                //ComputeRectOnScreen(rContext, false, ref tempRectF);
                 internalGraphics.SetClip(tempRectF);
             }
             public void ClearClipping(Graphics g)
@@ -478,7 +478,7 @@ namespace GAppCreator
             #endregion
 
         }
-
+        #endregion
 
         #region Transformations
 
@@ -6847,7 +6847,7 @@ namespace GAppCreator
                 get { return Enabled; }
                 set { Enabled = value; }
             }
-            [XmlIgnore(), Category("Button"), DisplayName("Send click event when animation ends")]
+            [XmlIgnore(), Category("Button"), DisplayName("Close PopupLoop and send event")]
             public bool _SendEventWhenAnimationEnds
             {
                 get { return SendEventWhenAnimationEnds; }
@@ -7323,6 +7323,8 @@ namespace GAppCreator
             public string ZOrder = "";
             [XmlAttribute()]
             public bool AutoStart = false;
+            [XmlAttribute()]
+            public bool PrezerveAspectRatioOnFullScreen = false;
 
             [XmlArrayItem(typeof(EntireSurfaceElement))]
             [XmlArrayItem(typeof(ImageElement))]
@@ -7379,6 +7381,12 @@ namespace GAppCreator
             {
                 get { return AutoStart; }
                 set { AutoStart = value; }
+            }
+            [XmlIgnore(), Description("Prezerve aspect ratio on running in full screen mode. This will center the animation to the screen."), Category("Layout"), DisplayName("Prezerve aspect ratio")]
+            public bool _PrezerveAspectRatioOnFullScreen
+            {
+                get { return PrezerveAspectRatioOnFullScreen; }
+                set { PrezerveAspectRatioOnFullScreen = value; }
             }
             [XmlIgnore(), Description("Coordinates type"), Category("Layout"), DisplayName("Coordinates")]
             public Coordinates _Coord
@@ -7826,7 +7834,7 @@ namespace GAppCreator
                 return s + "\n};\n";
             }
 
-            public string CreateCPPWrapperCodeClass()
+            public string CreateCPPWrapperCodeClass(Project prj)
             {
                 string s = "\n// ====================== Animation wrapper class for " + Name + " ===========================================\n";
                 // constructorii
@@ -7842,8 +7850,17 @@ namespace GAppCreator
                 }
                 else
                 {
-                    constr_code += "\n\tWidth = (float)(Core.Width);";
-                    constr_code += "\n\tHeight = (float)(Core.Height);";
+                    if (this.PrezerveAspectRatioOnFullScreen)
+                    {
+                        Size deviceSize = Project.SizeToValues(prj.DesignResolution);
+                        constr_code += "\n\tWidth  = ((float)("+ deviceSize.Width.ToString() +")) *  (Core.ResolutionAspectRatio);";
+                        constr_code += "\n\tHeight = ((float)("+ deviceSize.Height.ToString()+ ")) * (Core.ResolutionAspectRatio);";
+                    }
+                    else
+                    {
+                        constr_code += "\n\tWidth = (float)(Core.Width);";
+                        constr_code += "\n\tHeight = (float)(Core.Height);";
+                    }
                 }
                 //if (this.Coord == Coordinates.Pixels)
                 //    constr_code += "\n\tFlags = GAC_COORDINATES_PIXELS << 16;";
@@ -7879,7 +7896,15 @@ namespace GAppCreator
 
                 // functia de create
                 s += "\nvoid " + GetCPPClassName() + "::Create(" + param_list + ") {";
-                s += "\n\tthis->OffsetX = this->OffsetY = 0.0f;";
+                if ((this.PrezerveAspectRatioOnFullScreen) && (DesignMode == AnimationDesignMode.Screen))
+                {
+                    s += "\n\tthis->OffsetX = (((float)(Core.Width)) - this->Width)/2.0f;";
+                    s += "\n\tthis->OffsetY = (((float)(Core.Height)) - this->Height)/2.0f;";
+                }
+                else
+                {
+                    s += "\n\tthis->OffsetX = this->OffsetY = 0.0f;";
+                }
                 if ((AutoStart) && (DesignMode == AnimationDesignMode.Screen))
                     s += "\n\tStop();";
                 foreach (var p in this.animParams.ParametersList)

@@ -176,7 +176,7 @@ namespace GAppCreator
             content = "#include \"Framework.h\"\n\n";
             foreach (var a in prj.AnimationObjects)
             {
-                content += a.CreateCPPWrapperCodeClass();
+                content += a.CreateCPPWrapperCodeClass(prj);
             }
             if (Disk.SaveFile(Path.Combine(GACtoCPPFolder, "AnimationTemplateWrapper.cpp"), content, prj.EC) == false)
             {
