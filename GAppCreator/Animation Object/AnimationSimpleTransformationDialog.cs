@@ -43,7 +43,8 @@ namespace GAppCreator
         private void AddExtraItems()
         {
             lstTransformation.Groups.Add("actions", "Actions");
-            AddItem("Event", "event", typeof(AnimO.EventTransformation), "actions");            
+            AddItem("Event", "event", typeof(AnimO.EventTransformation), "actions");
+            AddItem("Set Animation end Event", "animation_end_event", typeof(AnimO.AnimationEndEventTransformation), "actions");            
             AddItem("Sound", "sound", typeof(AnimO.SoundTransformation), "actions");
             AddItem("Stopper", "stop", typeof(AnimO.Stopper), "actions");
             AddItem("Wait until triggered", "wait_until", typeof(AnimO.WaitUntil), "actions");

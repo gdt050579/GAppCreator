@@ -239,12 +239,12 @@ namespace GAppCreator
                 MessageBox.Show("Please select a simple element button");
                 return currentValue;
             }
-            if (obj.GetType() != typeof(AnimO.SimpleButtonElement))
+            AnimO.ButtonBasedElement sbe = obj as AnimO.ButtonBasedElement;
+            if (sbe == null)
             {
-                MessageBox.Show("Please select a simple element button");
+                MessageBox.Show("Please select a button based element (derived from ButtonBasedElement)");
                 return currentValue;
             }
-            AnimO.SimpleButtonElement sbe = (AnimO.SimpleButtonElement)obj;
             AnimationObjectButtonStateEditor dlg = new AnimationObjectButtonStateEditor(currentValue, AnimO.GenericElement.CurrentAppResources,sbe.Width,sbe.Height, sbe.BackgroundStyle);
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 return dlg.Result;
@@ -409,6 +409,18 @@ namespace GAppCreator
             AnimO.SimpleButtonElement btn = new AnimO.SimpleButtonElement();
             btn.Name = "Button_" + (ResultedAnimationObject.Elements.Count() + 1).ToString();
             AddElement(btn);
+        }
+        private void OnAddSimpleCheckboxElement(object sender, EventArgs e)
+        {
+            AnimO.SimpleCheckBoxElement cbx = new AnimO.SimpleCheckBoxElement();
+            cbx.Name = "CheckBox_" + (ResultedAnimationObject.Elements.Count() + 1).ToString();
+            AddElement(cbx);
+        }
+        private void OnAddSimpleRadioBoxElement(object sender, EventArgs e)
+        {
+            AnimO.SimpleRadioBoxElement cbx = new AnimO.SimpleRadioBoxElement();
+            cbx.Name = "RadioBox_" + (ResultedAnimationObject.Elements.Count() + 1).ToString();
+            AddElement(cbx);
         }
         private void OnAddRectangle(object sender, EventArgs e)
         {
@@ -1155,6 +1167,7 @@ namespace GAppCreator
         {
             board.Invalidate();
         }
+
 
     }
 }

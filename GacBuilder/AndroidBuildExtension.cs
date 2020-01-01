@@ -106,7 +106,7 @@ namespace GAppCreator
                     result += line + "\n";
             }
             return result;
-        }
+        }        
         private string GetAndroidSDKPlatform()
         {
             string ver = ((int)AndroidConfig.AndroidSDKVersion).ToString();
@@ -704,6 +704,20 @@ namespace GAppCreator
             }
             return task.UpdateSuccessErrorState(true);
         }
+        private string GetBuildArchitectures()
+        {
+            List<string> l = Project.StringListToList(AndroidConfig.Architecture);
+            string result = "";
+            bool first = true;
+            foreach (string i in l)
+            {
+                if (!first)
+                    result += " , ";
+                result += "'" + i.Replace("_", "-") + "'";
+                first = false;
+            }
+            return result;
+        }
         private bool CreateGradleFiles()
         {
             task.CreateSubTask("Create graddle files");
@@ -738,6 +752,7 @@ namespace GAppCreator
             d["$$KEY_STORE_FILE$$"] = prj.Settings.AndroidSignKeystore.Replace("\\","/");
             d["$$KEY_STORE_PASSWORD$$"] = prj.Settings.AndroidSignPass;
             d["$$KEY_STORE_ALIAS$$"] = prj.Settings.AndroidKeystoreAlias;
+            d["$$ARCHITECTURES$$"] = GetBuildArchitectures();
 
             // construiesc dependecies list
             string dep = "\n";

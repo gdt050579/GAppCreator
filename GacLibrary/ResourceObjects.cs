@@ -682,6 +682,75 @@ namespace GAppCreator
         }
 
     }
+    public class FlagsEnumTypeEditor : UITypeEditor
+    {
+        public class Source : Attribute
+        {
+            public Type enumType = null;
+            public Source(Type type) { enumType = type; }
+            public string[] GetOptions()
+            {
+                if (enumType == null)
+                    return null;
+                return Enum.GetNames(enumType);
+            }
+        }
+        private string result = "";
+
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        {
+            return UITypeEditorEditStyle.DropDown;
+        }
+        public override bool IsDropDownResizable
+        {
+            get
+            {
+                return false;
+            }
+        }
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        {
+            result = "";
+            Source s = (Source)context.PropertyDescriptor.Attributes[typeof(Source)];
+            if (s == null)
+                return "";
+            string[] options = s.GetOptions();
+            if (options == null)
+                return "";
+            IWindowsFormsEditorService es = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            if ((es != null) && (s != null))
+            {
+                CheckedListBox cb = new CheckedListBox();
+                cb.BeginUpdate();                
+                foreach (string opt in options)
+                {
+                    cb.Items.Add(opt);
+                    cb.SetItemChecked(cb.Items.Count - 1, value.ToString().Contains(opt));
+                }
+                cb.Sorted = true;
+                cb.CheckOnClick = true;
+                cb.EndUpdate();
+
+                cb.Leave += cb_Leave;
+                es.DropDownControl(cb);
+
+            }
+            return result;
+        }
+
+        void cb_Leave(object sender, EventArgs e)
+        {
+            CheckedListBox cb = (CheckedListBox)sender;
+            string s = "";
+            for (int tr = 0; tr < cb.Items.Count; tr++)
+                if (cb.GetItemChecked(tr))
+                    s += cb.Items[tr].ToString() + " , ";
+            if (s.Length > 0)
+                s = s.Substring(0, s.Length - 3);
+            result = s;
+        }
+
+    }
     class GlyphVersionsEditor : UITypeEditor
     {
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
@@ -1068,7 +1137,8 @@ namespace GAppCreator
                 int index = -1;
                 if (prj!=null)
                 {
-                    int tr = 0;
+                    int tr = 1;
+                    cb.Items.Add("<None>");
                     foreach (var e in prj.ObjectEventsIDs)
                     {
                         if ((value != null) && (e.Name.Equals(value)))
@@ -1103,7 +1173,11 @@ namespace GAppCreator
             if (cb.SelectedIndex < 0)
                 result = "";
             else
+            {
                 result = cb.Items[cb.SelectedIndex].ToString();
+                if (result.ToLower().Equals("<none>"))
+                    result = "";
+            }
         }
     }
     public class CounterEnableConditionEditor : UITypeEditor
@@ -6313,6 +6387,18 @@ namespace GAppCreator
         Nougat_25 = 25,
         Oreo_26 = 26,
         Oreo_27 = 27,
+        Pie_28 = 28,
+        Android10_29 = 29,
+
+    };
+    [Flags]
+    public enum AndroidArchitecture: int
+    {
+        armeabi_v7a = 1,
+        arm64_v8a = 2,
+        x86 = 4,
+        x86_64 = 8
+
     };
     public enum AndroidJavaCodeObfuscation
     {
@@ -8757,6 +8843,8 @@ namespace GAppCreator
         public string FirebaseGoogleServicesJSONFile = "";
         [XmlAttribute()]
         public bool FirebaseCrashAnalytics = false;
+        [XmlAttribute()]
+        public string Architecture = AndroidArchitecture.armeabi_v7a.ToString();
 
         #region Atribute
         [XmlIgnore(), Description("Screen Orientation"), Category("Application"), DisplayName("Screen Orientation")]
@@ -8817,6 +8905,15 @@ namespace GAppCreator
             get { return AndroidSDKVersion; }
             set { AndroidSDKVersion = value; }
         }
+
+        [XmlIgnore(), Description("Specifies the architectures for this build"), Category("Build"), DisplayName("Architectures"), Editor(typeof(FlagsEnumTypeEditor), typeof(UITypeEditor)), FlagsEnumTypeEditor.Source(typeof(AndroidArchitecture))]
+        public virtual string _Architecture
+        {
+            get { return Architecture; }
+            set { Architecture = value; }
+        }
+
+
         [XmlIgnore(), Description("Access Internet"), Category("Permissions"), DisplayName("Access Internet")]
         public bool _PermInternet
         {

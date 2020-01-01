@@ -533,6 +533,7 @@ namespace GAppCreator
         [XmlInclude(typeof(WaitUntil))]
         [XmlInclude(typeof(SoundTransformation))]
         [XmlInclude(typeof(EventTransformation))]
+        [XmlInclude(typeof(AnimationEndEventTransformation))]
         [XmlInclude(typeof(TimerTransformation))]
         [XmlInclude(typeof(GenericElementTransformation))]
         [XmlType("Transformation"), XmlRoot("Transformation")]
@@ -866,6 +867,93 @@ namespace GAppCreator
                 return false;
             }
             public override string GetCPPClassName() { return "Event"; }
+            public override string CreateInitializationCPPCode()
+            {
+                return "\n\t//Event transformation\n\t" + this.CppName + ".EventID = " + EventIDValue.ToString() + ";\n";
+            }
+            public override void PopulateParameters(AnimationParameters p)
+            {
+                if (UserValue_Event.Length > 0)
+                    p.ParametersList.Add(new ParameterInformation(UserValue_Event, "int"));
+                base.PopulateParameters(p);
+            }
+            public override string CreateOnStartCPPCode()
+            {
+                return GetOnStartFieldInit(UserValue_Event, "EventID") + base.CreateOnStartCPPCode();
+            }
+            #endregion
+        }
+        [XmlType("AnimationEndEvent"), XmlRoot("AnimationEndEvent")]
+        public class AnimationEndEventTransformation : GenericTransformation
+        {
+            [XmlAttribute()]
+            public string EventID = "";
+            [XmlAttribute()]
+            public string UserValue_Event = "";
+
+            [XmlIgnore()]
+            public int EventIDValue = -1;
+
+            #region Atribute
+            [XmlIgnore(), Description("Event that will be triggered when animation ends"), Category("Event"), DisplayName("Event"), Editor(typeof(EventIDSelectorEditor), typeof(UITypeEditor))]
+            public string _EventID
+            {
+                get { return EventID; }
+                set
+                {
+                    if (Project.ValidateVariableNameCorectness(value, false) == false)
+                    {
+                        MessageBox.Show("Invalid name for event - you can only use letters and numbers and character '_'. The first character must be a letter !");
+                        return;
+                    }
+                    EventID = value;
+                }
+            }
+
+            [XmlIgnore(), Description("Parameter name"), Category("Initialization parameters (user dependent)"), DisplayName("Event")]
+            public string _UserValue_Event
+            {
+                get { return UserValue_Event; }
+                set { UserValue_Event = value; }
+            }
+            #endregion
+
+            #region Virtual functions
+            public override string GetName()
+            {
+                return "Set event for when animation ends to (" + EventID + ")";
+            }
+            public override string GetIconKey()
+            {
+                return "animation_end_event";
+            }
+            public override void Validate(Project prj, string animationName, AppResources resources, Dictionary<string, GenericElement> elements)
+            {
+                EventIDValue = -1;
+                if (EventID.Length == 0)
+                {
+                    prj.EC.AddError("Animation - '" + animationName + "' : You have to add an event ID to an Event Transformation !");
+                    return;
+                }
+                foreach (var e in prj.ObjectEventsIDs)
+                    if (e.Name.Equals(EventID))
+                    {
+                        EventIDValue = e.ID;
+                        return;
+                    }
+                prj.EC.AddError("Animation - '" + animationName + "' : Event '" + EventID + "' is not defined !");
+            }
+            #endregion
+
+            #region Dynamic Execution
+            protected override void OnInit()
+            {
+            }
+            protected override bool OnUpdate()
+            {
+                return false;
+            }
+            public override string GetCPPClassName() { return "AnimationEndEvent"; }
             public override string CreateInitializationCPPCode()
             {
                 return "\n\t//Event transformation\n\t" + this.CppName + ".EventID = " + EventIDValue.ToString() + ";\n";
@@ -4627,7 +4715,7 @@ namespace GAppCreator
             No,
             Yes,
         };
-        public enum SimpleButtonSetter
+        public enum ButtonFaceSetter
         {
             No,
             OneForEachState,
@@ -4657,7 +4745,10 @@ namespace GAppCreator
         [XmlInclude(typeof(ExclusionRectangleElement))]
         [XmlInclude(typeof(ClipRectangleElement))]
         [XmlInclude(typeof(DisableClippingElement))]
+        [XmlInclude(typeof(ButtonBasedElement))]
         [XmlInclude(typeof(SimpleButtonElement))]
+        [XmlInclude(typeof(SimpleCheckBoxElement))]
+        [XmlInclude(typeof(SimpleRadioBoxElement))]
         [XmlInclude(typeof(GenericElementWithPosition))]
         [XmlInclude(typeof(GenericElementWithPositionAndSize))]
         [XmlType("Element"), XmlRoot("Element")]
@@ -5280,7 +5371,7 @@ namespace GAppCreator
         public class ImageElement : GenericElementWithPosition
         {
             [XmlAttribute()]
-            public string UserValue_ColorBlending = "", UserValue_Images = "";
+            public string UserValue_ColorBlending = "", UserValue_Images = "", UserValue_ImageIndex = "";
             [XmlAttribute()]
             public int ColorBlending = -1;
             [XmlAttribute()]
@@ -5330,6 +5421,7 @@ namespace GAppCreator
             #endregion
 
             #region Initialization parameters (user dependent)
+            [XmlIgnore(), Description("Parameter name"), Category("Initialization parameters (user dependent)"), DisplayName("Blend Color")]
             public string _UserValue_ColorBlending
             {
                 get { return UserValue_ColorBlending; }
@@ -5340,6 +5432,12 @@ namespace GAppCreator
             {
                 get { return UserValue_Images; }
                 set { UserValue_Images = value; }
+            }
+            [XmlIgnore(), Description("Parameter name"), Category("Initialization parameters (user dependent)"), DisplayName("Image Index")]
+            public string _UserValue_ImageIndex
+            {
+                get { return UserValue_ImageIndex; }
+                set { UserValue_ImageIndex = value; }
             }
             #endregion
 
@@ -5454,7 +5552,7 @@ namespace GAppCreator
                 {
                     List<String> lst = Project.StringListToList(Images, ';');
                     s += "\n\t" + Name + ".ImageList = new GApp::Resources::Bitmap *[" + lst.Count.ToString() + "];";
-                    s += "\n\t" + Name + ".ImageIndex = " + this.ImageIndex.ToString() + ";";
+                    s += "\n\t" + Name + ".ImageIndex = " + GetParamOrDefaultValue(this.ImageIndex.ToString(), UserValue_ImageIndex) + ";";
                     s += "\n\t" + Name + ".Count = " + lst.Count.ToString() + ";";
                     for (int tr = 0; tr < lst.Count; tr++)
                         s += "\n\t" + Name + ".ImageList[" + tr.ToString() + "] = Res.Images." + lst[tr] + ";";
@@ -5473,6 +5571,8 @@ namespace GAppCreator
                 base.PopulateParameters(p);
                 if (UserValue_ColorBlending.Length > 0)
                     p.ParametersList.Add(new ParameterInformation(UserValue_ColorBlending, "unsigned int", "Color"));
+                if (UserValue_ImageIndex.Length > 0)
+                    p.ParametersList.Add(new ParameterInformation(UserValue_ImageIndex, "unsigned int", "uint"));
                 if (UserValue_Images.Length > 0)
                 {
                     if (HasMultipleImages() == false)
@@ -6495,6 +6595,17 @@ namespace GAppCreator
                 UserValue_Text = GetValue(d, "UserValue_Text", UserValue_Text);
                 return true;
             }
+            public string CreateFromStringAndValidate(string format, AppResources resources, SimpleButtonBackgroundStyle mode)
+            {
+                if (this.CreateFromString(format) == false)
+                {
+                    return "Fail to create face from string ! (format=" + format;
+                }
+                string res = this.Validate(resources, mode);
+                if (res != null)
+                    return "Unable to validate face: " + res + "\n";
+                return "";
+            }
             public string CreateString()
             {
                 string s = "";
@@ -6775,88 +6886,53 @@ namespace GAppCreator
                 return Enum.GetNames(typeof(ActionType));
             }
         }
-        public class SimpleButtonElement : GenericElementWithPositionAndSize
+
+        public class ButtonBasedElement: GenericElementWithPositionAndSize
         {
-            [XmlAttribute()]
-            public string Normal = "";
-            [XmlAttribute()]
-            public string Pressed = "";
-            [XmlAttribute()]
-            public string Inactive = "";
-            [XmlAttribute()]
-            public bool Enabled = true;
-            [XmlAttribute()]
-            public bool SendEventWhenAnimationEnds = false;
+            public class FaceInfo
+            {
+                public string Name;
+                public ButtonFaceContainer Face;
+            }
             [XmlAttribute()]
             public string ClickEvent = "";
+            [XmlAttribute()]
+            public bool Enabled = true;
             [XmlAttribute()]
             public SimpleButtonBackgroundStyle BackgroundStyle = SimpleButtonBackgroundStyle.Image;
             [XmlAttribute()]
             public string SoundName = "";
-
-
-            [XmlIgnore()]
-            public int EventIDValue = -1;
-
-
 
             [XmlAttribute()]
             public string UserValue_Enabled = "", UserValue_Event = "";
             [XmlAttribute()]
             public string UserValue_Sound = "";
 
-            [XmlAttribute()]
-            public SimpleButtonSetter Setter_Background_Image = SimpleButtonSetter.No;
-            [XmlAttribute()]
-            public SimpleButtonSetter Setter_Symbol_Image = SimpleButtonSetter.No;
-            [XmlAttribute()]
-            public SimpleButtonSetter Setter_Background_Color = SimpleButtonSetter.No;
-            [XmlAttribute()]
-            public SimpleButtonSetter Setter_Symbol_Color = SimpleButtonSetter.No;
-            [XmlAttribute()]
-            public SimpleButtonSetter Setter_Text_Color = SimpleButtonSetter.No;
-            [XmlAttribute()]
-            public SimpleButtonSetter Setter_Text = SimpleButtonSetter.No;
+            [XmlIgnore()]
+            public int EventIDValue = -1;
+
             [XmlAttribute()]
             public YesNo Getter_Enabled = YesNo.No;
             [XmlAttribute()]
             public YesNo Setter_Enabled = YesNo.No;
+            [XmlAttribute()]
+            public ButtonFaceSetter Setter_Background_Image = ButtonFaceSetter.No;
+            [XmlAttribute()]
+            public ButtonFaceSetter Setter_Symbol_Image = ButtonFaceSetter.No;
+            [XmlAttribute()]
+            public ButtonFaceSetter Setter_Background_Color = ButtonFaceSetter.No;
+            [XmlAttribute()]
+            public ButtonFaceSetter Setter_Symbol_Color = ButtonFaceSetter.No;
+            [XmlAttribute()]
+            public ButtonFaceSetter Setter_Text_Color = ButtonFaceSetter.No;
+            [XmlAttribute()]
+            public ButtonFaceSetter Setter_Text = ButtonFaceSetter.No;
 
             #region Atribute
-            [XmlIgnore(), Category("Button"), DisplayName("Normal state"), Description("Aspect for normal button state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
-            public string _Normal
-            {
-                get { return Normal; }
-                set { Normal = value; }
-            }
-            [XmlIgnore(), Category("Button"), DisplayName("Pressed state"), Description("Aspect for pressed button state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
-            public string _Pressed
-            {
-                get { return Pressed; }
-                set { Pressed = value; }
-            }
-            [XmlIgnore(), Category("Button"), DisplayName("Inactive state"), Description("Aspect for inactive button state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
-            public string _Inactive
-            {
-                get { return Inactive; }
-                set { Inactive = value; }
-            }
-            [XmlIgnore(), Category("Button"), DisplayName("Enabled")]
-            public bool _Enabled
-            {
-                get { return Enabled; }
-                set { Enabled = value; }
-            }
-            [XmlIgnore(), Category("Button"), DisplayName("Close PopupLoop and send event")]
-            public bool _SendEventWhenAnimationEnds
-            {
-                get { return SendEventWhenAnimationEnds; }
-                set { SendEventWhenAnimationEnds = value; }
-            }
-            [XmlIgnore(), Description("Event that will be triggered"), Category("Button"), DisplayName("Click Event"), Editor(typeof(EventIDSelectorEditor), typeof(UITypeEditor))]
+            [XmlIgnore(), Description("Event that will be triggered"), Category("Behavior"), DisplayName("Click Event"), Editor(typeof(EventIDSelectorEditor), typeof(UITypeEditor))]
             public string _ClickEvent
             {
-                get { return ClickEvent; }
+                get { if (ClickEvent.Length == 0) return "<None>"; return ClickEvent; }
                 set
                 {
                     if (Project.ValidateVariableNameCorectness(value, false) == false)
@@ -6867,17 +6943,23 @@ namespace GAppCreator
                     ClickEvent = value;
                 }
             }
-            [XmlIgnore(), Description("Button Aliganment"), Category("Button"), DisplayName("Background Style")]
+            [XmlIgnore(), Description("Button Aliganment"), Category("Behavior"), DisplayName("Background Style")]
             public SimpleButtonBackgroundStyle _Mode
             {
                 get { return BackgroundStyle; }
                 set { BackgroundStyle = value; }
             }
-            [XmlIgnore(), Description("Sound that will be played when the button is clicked"), Category("Button"), DisplayName("Sound"), Editor(typeof(SoundSelectorEditor), typeof(UITypeEditor))]
+            [XmlIgnore(), Description("Sound that will be played when the button is clicked"), Category("Behavior"), DisplayName("Sound"), Editor(typeof(SoundSelectorEditor), typeof(UITypeEditor))]
             public string _SoundName
             {
                 get { return SoundName; }
                 set { SoundName = value; }
+            }
+            [XmlIgnore(), Category("Behavior"), DisplayName("Enabled")]
+            public bool _Enabled
+            {
+                get { return Enabled; }
+                set { Enabled = value; }
             }
             #endregion
 
@@ -6909,85 +6991,212 @@ namespace GAppCreator
                 get { return Getter_Enabled; }
                 set { Getter_Enabled = value; }
             }
-
-            [XmlIgnore(), Description("Sets the background image for this specific element"), Category("Setters"), DisplayName("Background Image")]
-            public SimpleButtonSetter _Setter_Background_Image
-            {
-                get { return Setter_Background_Image; }
-                set { Setter_Background_Image = value; }
-            }
-            [XmlIgnore(), Description("Sets the symbol image for this specific element"), Category("Setters"), DisplayName("Symbol Image")]
-            public SimpleButtonSetter _Setter_Symbol_Image
-            {
-                get { return Setter_Symbol_Image; }
-                set { Setter_Symbol_Image = value; }
-            }
-            [XmlIgnore(), Description("Sets the background image for this specific element"), Category("Setters"), DisplayName("Background Color")]
-            public SimpleButtonSetter _Setter_Background_Color
-            {
-                get { return Setter_Background_Color; }
-                set { Setter_Background_Color = value; }
-            }
-            [XmlIgnore(), Description("Sets the symbol color for this specific element"), Category("Setters"), DisplayName("Symbol Color")]
-            public SimpleButtonSetter _Setter_Symbol_Color
-            {
-                get { return Setter_Symbol_Color; }
-                set { Setter_Symbol_Color = value; }
-            }
             [XmlIgnore(), Description("Sets the symbol image for this specific element"), Category("Setters"), DisplayName("Enabled")]
             public YesNo _Setter_Enabled
             {
                 get { return Setter_Enabled; }
                 set { Setter_Enabled = value; }
             }
+
+            [XmlIgnore(), Description("Sets the background image for this specific element"), Category("Setters"), DisplayName("Background Image")]
+            public ButtonFaceSetter _Setter_Background_Image
+            {
+                get { return Setter_Background_Image; }
+                set { Setter_Background_Image = value; }
+            }
+            [XmlIgnore(), Description("Sets the symbol image for this specific element"), Category("Setters"), DisplayName("Symbol Image")]
+            public ButtonFaceSetter _Setter_Symbol_Image
+            {
+                get { return Setter_Symbol_Image; }
+                set { Setter_Symbol_Image = value; }
+            }
+            [XmlIgnore(), Description("Sets the background image for this specific element"), Category("Setters"), DisplayName("Background Color")]
+            public ButtonFaceSetter _Setter_Background_Color
+            {
+                get { return Setter_Background_Color; }
+                set { Setter_Background_Color = value; }
+            }
+            [XmlIgnore(), Description("Sets the symbol color for this specific element"), Category("Setters"), DisplayName("Symbol Color")]
+            public ButtonFaceSetter _Setter_Symbol_Color
+            {
+                get { return Setter_Symbol_Color; }
+                set { Setter_Symbol_Color = value; }
+            }
+
             [XmlIgnore(), Description("Sets the text color for this specific element"), Category("Setters"), DisplayName("Text Color")]
-            public SimpleButtonSetter _Setter_Text_Color
+            public ButtonFaceSetter _Setter_Text_Color
             {
                 get { return Setter_Text_Color; }
                 set { Setter_Text_Color = value; }
             }
             [XmlIgnore(), Description("Sets the text color for this specific element"), Category("Setters"), DisplayName("Text")]
-            public SimpleButtonSetter _Setter_Text
+            public ButtonFaceSetter _Setter_Text
             {
                 get { return Setter_Text; }
                 set { Setter_Text = value; }
             }
             #endregion
 
-            #region Virtual Functions
-            private ButtonFaceContainer FaceNormal = new ButtonFaceContainer();
-            private ButtonFaceContainer FacePressed = new ButtonFaceContainer();
-            private ButtonFaceContainer FaceInactive = new ButtonFaceContainer();
-            private RuntimeContext symbolExecutionContext = new RuntimeContext();
-            private RuntimeContext textExecutionContext = new RuntimeContext();
+            #region Virtual functions
+            protected FaceInfo[] faces = null;
+            protected ButtonFaceContainer DefaultFace = null;
+            protected string extraSetEnable = null;
 
-            private RectangleF tempRect = new RectangleF();
-
-            protected override float GetWidthInPixels()
+            private void CreateFaces(string s)
             {
-                if (BackgroundStyle == SimpleButtonBackgroundStyle.Image)
+                List<string> l = Project.StringListToList(s);
+                faces = new FaceInfo[l.Count];
+                for (int tr=0;tr<l.Count;tr++)
                 {
-                    if (FaceNormal.Background != null)
-                        return FaceNormal.Background.Width;
+                    faces[tr] = new FaceInfo();
+                    faces[tr].Face = new ButtonFaceContainer();
+                    faces[tr].Name = l[tr];
+                }
+                DefaultFace = faces[0].Face;
+            }
+            protected string DoBasicValidations(Project prj, AppResources resources, bool eventIsMandatory,string []strFormat)
+            {
+                string result = "";
+
+                EventIDValue = -1;
+                if ((ClickEvent.Length == 0) && (eventIsMandatory))
+                    result += "SimpleButton '" + Name + "' : You have to add a click event ID !\n";
+                foreach (var e in prj.ObjectEventsIDs)
+                    if (e.Name.Equals(ClickEvent))
+                    {
+                        EventIDValue = e.ID;
+                        break;
+                    }
+                if ((EventIDValue == -1) && (eventIsMandatory))
+                    result += "Unknwown event: '" + ClickEvent + "' in simple button : '" + Name + "' !\n";
+
+                if (strFormat == null)
+                    result += "Expecting a valid lists of strings !";
+                else
+                {
+                    if (strFormat.Length != faces.Length)
+                        result += "Invalid number of faces (expected " + faces.Length.ToString() + " but received " + strFormat.Length.ToString() + ")";
                     else
-                        return 0;
+                    {
+                        for (int tr=0;tr<strFormat.Length;tr++)
+                        {
+                            result += faces[tr].Face.CreateFromStringAndValidate(strFormat[tr], resources, BackgroundStyle);
+                        }
+                    }
+                }
+
+                return result;
+            }
+            private void CreateGetterForButtonSetter(GACParser.Module m, string name, ButtonFaceSetter style, string paramName, string paramType)
+            {
+                GACParser.Member mb = new GACParser.Member(m, GACParser.MemberType.Function, name, name, "void", "", null);
+                if (style == ButtonFaceSetter.OneForAll)
+                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, paramName, paramName, paramType, "", null));
+                else
+                {
+                    foreach (var a in faces)
+                    {
+                        mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, paramName + a.Name, paramName + a.Name, paramType, "", null));
+                    }
+                }
+                m.Members[name] = mb;
+            }
+            private string CreateCPPAllParamStrings(string cppParamType, string paramName)
+            {
+                string s = "";
+                bool firstTime = true;
+                foreach (var a in faces)
+                {
+                    if (!firstTime)
+                        s += " , ";
+                    s += cppParamType + " " + paramName + a.Name;
+                    firstTime = false;
+                }
+                return s;
+            }
+            private string CreateCPPHeaderSetterForButtonSetter(string name, ButtonFaceSetter style, string paramName, string cppParamType)
+            {
+                if (style == ButtonFaceSetter.OneForAll)
+                    return "\n\tvoid " + name + " (" + cppParamType + " " + paramName + "); ";
+                else
+                    return "\n\tvoid " + name + " (" + CreateCPPAllParamStrings(cppParamType,paramName) + "); ";
+            }
+            protected string CreateCPPElementCast(string objName)
+            {
+                return "\n\t\tGApp::Animations::Elements::"+ GetCPPClassName() + " * el = ((GApp::Animations::Elements::"+ GetCPPClassName() + "*)(&" + objName + "));";
+            }
+            private string CreateCPPCodeSetterForButtonSetter(string className, string name, string objName, string objParam, ButtonFaceSetter style, string paramName, string cppParamType)
+            {
+                string s = "";
+                if (style == ButtonFaceSetter.OneForAll)
+                {
+                    s = "\n\tvoid " + className + "::" + name + " (" + cppParamType + " " + paramName + ") {";
+                    s += CreateCPPElementCast(objName);
+                    foreach (var a in faces)
+                    {
+                        s += "\n\t\tel->"+a.Name+"." + objParam + " = " + paramName + ";";
+                    }
+                    //s += "\n\t\tel->Normal." + objParam + " = " + paramName + ";";
+                    //s += "\n\t\tel->Pressed." + objParam + " = " + paramName + ";";
+                    //s += "\n\t\tel->Inactive." + objParam + " = " + paramName + ";";
                 }
                 else
-                    return this.Width;
-            }
-            protected override float GetHeightInPixels()
-            {
-                if (BackgroundStyle == SimpleButtonBackgroundStyle.Image)
                 {
-                    if (FaceNormal.Background != null)
-                        return FaceNormal.Background.Height;
-                    else
-                        return 0;
+                    s = "\n\tvoid " + className + "::" + name + " (" + CreateCPPAllParamStrings(cppParamType, paramName) + ") {";
+                    s += CreateCPPElementCast(objName);
+                    foreach (var a in faces)
+                    {
+                        s += "\n\t\tel->" + a.Name + "." + objParam + " = " + paramName + a.Name+ ";";
+                    }
+                    //s += "\n\t\tel->Normal." + objParam + " = " + paramName + "Normal;";
+                    //s += "\n\t\tel->Pressed." + objParam + " = " + paramName + "Pressed;";
+                    //s += "\n\t\tel->Inactive." + objParam + " = " + paramName + "Inactive;";
+                }
+                return s + "\n\t}\n";
+            }
+            private string CreateCPPCodeSetterForButtonTextSetter(string className, string name, string objName, ButtonFaceSetter style, string paramName, string cppParamType)
+            {
+                string s = "";
+                if (style == ButtonFaceSetter.OneForAll)
+                {
+                    s = "\n\tvoid " + className + "::" + name + " (" + cppParamType + " " + paramName + ") {";
+                    s += CreateCPPElementCast(objName);
+                    foreach (var a in faces)
+                    {
+                        s += "\n\t\tel->" + a.Name + ".TP.SetText(" + paramName + ");";
+                    }
+                    //s += "\n\t\tel->Normal.TP.SetText(" + paramName + ");";
+                    //s += "\n\t\tel->Pressed.TP.SetText(" + paramName + ");";
+                    //s += "\n\t\tel->Inactive.TP.SetText(" + paramName + ");";
                 }
                 else
-                    return this.Height;
+                {
+                    s = "\n\tvoid " + className + "::" + name + " (" + CreateCPPAllParamStrings(cppParamType, paramName) + ") {";
+                    s += CreateCPPElementCast(objName);
+                    foreach (var a in faces)
+                    {
+                        s += "\n\t\tel->" + a.Name + ".TP.SetText(" + paramName + a.Name+");";
+                    }
+                    //s += "\n\t\tel->Normal.TP.SetText(" + paramName + "Normal);";
+                    //s += "\n\t\tel->Pressed.TP.SetText(" + paramName + "Pressed);";
+                    //s += "\n\t\tel->Inactive.TP.SetText(" + paramName + "Inactive);";
+                }
+                return s + "\n\t}\n";
             }
 
+
+
+            protected virtual string GetFacesList()
+            {
+                return "";
+            }
+            protected virtual Dictionary<string, ButtonFaceContainer> GetButtonFaces()
+            {
+                return null;
+            }
+            #endregion
+
+            #region Overridden functions
             protected override void SetPositionAndSize(float x_percentage, float y_percantage, float unscaled_widthInPixels, float unscaled_heightInPixels, float scaledWidth, float scaleHeight)
             {
                 this.X = x_percentage;
@@ -7003,7 +7212,214 @@ namespace GAppCreator
                     this.Height = unscaled_heightInPixels;
                 }
             }
+            protected override float GetWidthInPixels()
+            {
+                ButtonFaceContainer face = DefaultFace;
+                if (BackgroundStyle == SimpleButtonBackgroundStyle.Image)
+                {
+                    if ((face != null) && (face.Background != null))
+                        return face.Background.Width;
+                    else
+                        return 0;
+                }
+                else
+                    return this.Width;
+            }
+            protected override float GetHeightInPixels()
+            {
+                ButtonFaceContainer face = DefaultFace;
+                if (BackgroundStyle == SimpleButtonBackgroundStyle.Image)
+                {
+                    if ((face != null) && (face.Background != null))
+                        return face.Background.Height;
+                    else
+                        return 0;
+                }
+                else
+                    return this.Height;
+            }
 
+            public override string CreateOnStartCPPCode(AnimationObject animObj)
+            {
+                string s = base.CreateOnStartCPPCode(animObj);
+                s += "\n\t" + Name + ".Enabled = " + GetParamOrDefaultValue(this.Enabled.ToString().ToLower(), UserValue_Enabled) + ";";
+                s += "\n\t" + Name + ".ClickEvent = " + GetParamOrDefaultValue(this.EventIDValue.ToString(), UserValue_Event) + ";";
+                s += "\n\t" + Name + ".UseBackgoundImage = " + (this.BackgroundStyle == SimpleButtonBackgroundStyle.Image).ToString().ToLower() + ";";
+                s += "\n\t" + Name + ".CanProcessTouchEvents = true;";
+                if (SoundName.Length > 0)
+                    s += "\n\t" + Name + ".ClickSound = " + GetParamOrDefaultValue("Res.Sounds." + this.SoundName, UserValue_Sound) + ";";
+                else
+                    s += "\n\t" + Name + ".ClickSound = " + GetParamOrDefaultValue("NULL", UserValue_Sound) + ";";
+
+                foreach (var a in faces)
+                {
+                    s += a.Face.CreateOnStartCPPCode(animObj, Name + "." + a.Name);
+                }
+                return s;
+            }
+            public override void PopulateParameters(AnimationParameters p)
+            {
+                base.PopulateParameters(p);
+                if (UserValue_Enabled.Length > 0)
+                    p.ParametersList.Add(new ParameterInformation(UserValue_Enabled, "bool"));
+                if (UserValue_Event.Length > 0)
+                    p.ParametersList.Add(new ParameterInformation(UserValue_Event, "int"));
+                if (UserValue_Sound.Length > 0)
+                    p.ParametersList.Add(new ParameterInformation(UserValue_Sound, "GApp::Resources::Sound*", "Sound"));
+
+                foreach (var a in faces)
+                {
+                    a.Face.PopulateParameters(p);
+                }
+            }
+
+            public override void AddAnimationFunction(GACParser.Module m)
+            {
+                base.AddAnimationFunction(m);
+                if (Getter_Enabled != YesNo.No)
+                {
+                    string nm = "Is" + Name + "Enabled";
+                    m.Members[nm] = new GACParser.Member(m, GACParser.MemberType.Function, nm, nm, "bool", "", null);
+                }
+                if (Setter_Symbol_Image != ButtonFaceSetter.No)
+                    CreateGetterForButtonSetter(m, "Set" + Name + "SymbolImage", Setter_Symbol_Image, "symbolImage", "Bitmap");
+                if (Setter_Background_Image != ButtonFaceSetter.No)
+                    CreateGetterForButtonSetter(m, "Set" + Name + "BackgroundImage", Setter_Background_Image, "backgroundImage", "Bitmap");
+
+                if (Setter_Symbol_Color != ButtonFaceSetter.No)
+                    CreateGetterForButtonSetter(m, "Set" + Name + "SymbolColor", Setter_Symbol_Color, "symbolColor", "Color");
+                if (Setter_Background_Color != ButtonFaceSetter.No)
+                    CreateGetterForButtonSetter(m, "Set" + Name + "BackgroundColor", Setter_Background_Color, "backgroundColor", "Color");
+                if (Setter_Text_Color != ButtonFaceSetter.No)
+                    CreateGetterForButtonSetter(m, "Set" + Name + "TextColor", Setter_Text_Color, "textColor", "Color");
+
+                if (Setter_Text != ButtonFaceSetter.No)
+                    CreateGetterForButtonSetter(m, "Set" + Name + "Text", Setter_Text, "text", "string");
+
+                if (Setter_Enabled != YesNo.No)
+                {
+                    string nm = "Set" + Name + "Enable";
+                    GACParser.Member mb = new GACParser.Member(m, GACParser.MemberType.Function, nm, nm, "void", "", null);
+                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, "enableState", "enableState", "bool", "", null));
+                    m.Members[nm] = mb;
+                }
+            }
+            public override string GetAnimationFunctionCPPHeaderDefinition()
+            {
+                string s = base.GetAnimationFunctionCPPHeaderDefinition();
+                if (Setter_Symbol_Image != ButtonFaceSetter.No)
+                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "SymbolImage", Setter_Symbol_Image, "symbolImage", "GApp::Resources::Bitmap*");
+                if (Setter_Background_Image != ButtonFaceSetter.No)
+                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "BackgroundImage", Setter_Background_Image, "backgroundImage", "GApp::Resources::Bitmap*");
+                if (Setter_Symbol_Color != ButtonFaceSetter.No)
+                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "SymbolColor", Setter_Symbol_Color, "symbolColor", "unsigned int");
+                if (Setter_Background_Color != ButtonFaceSetter.No)
+                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "BackgroundColor", Setter_Background_Color, "backgroundColor", "unsigned int");
+                if (Setter_Text_Color != ButtonFaceSetter.No)
+                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "TextColor", Setter_Text_Color, "textColor", "unsigned int");
+                if (Setter_Text != ButtonFaceSetter.No)
+                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "Text", Setter_Text, "text", "const char *");
+                if (Getter_Enabled != YesNo.No)
+                    s += "\n\tbool Is" + Name + "Enabled ();";
+                if (Setter_Enabled != YesNo.No)
+                    s += "\n\tvoid Set" + Name + "Enable (bool enableState);";
+
+                return s;
+            }
+            public override string GetAnimationFunctionCPPImplementation(string className)
+            {
+                string s = base.GetAnimationFunctionCPPImplementation(className);
+                if (Setter_Symbol_Image != ButtonFaceSetter.No)
+                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "SymbolImage", Name, "Symbol", Setter_Symbol_Image, "symbolImage", "GApp::Resources::Bitmap*");
+                if (Setter_Background_Image != ButtonFaceSetter.No)
+                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "BackgroundImage", Name, "Background", Setter_Background_Image, "backgroundImage", "GApp::Resources::Bitmap*");
+                if (Setter_Symbol_Color != ButtonFaceSetter.No)
+                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "SymbolColor", Name, "SymbolColorBlending", Setter_Symbol_Color, "symbolColor", "unsigned int");
+                if (Setter_Background_Color != ButtonFaceSetter.No)
+                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "BackgroundColor", Name, "BackgroundColorBlending", Setter_Background_Color, "backgroundColor", "unsigned int");
+                if (Setter_Text_Color != ButtonFaceSetter.No)
+                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "TextColor", Name, "TextColorBlending", Setter_Text_Color, "textColor", "unsigned int");
+                if (Setter_Text != ButtonFaceSetter.No)
+                    s += CreateCPPCodeSetterForButtonTextSetter(className, "Set" + Name + "Text", Name, Setter_Text, "text", "const char *");
+
+                if (Getter_Enabled != YesNo.No)
+                {
+                    s += "\n\tbool " + className + "::Is" + Name + "Enabled () {";
+                    s += CreateCPPElementCast(Name);
+                    s += "\n\t\treturn el->Enabled;";
+                    s += "\n\t}";
+                }
+                if (Setter_Enabled != YesNo.No)
+                {
+                    s += "\n\tvoid " + className + "::Set" + Name + "Enable (bool enableState) {";
+                    s += CreateCPPElementCast(Name);
+                    if (extraSetEnable != null)
+                        s += "\n\t\t" + extraSetEnable + ";";
+                    s += "\n\t\tel->Enabled = enableState;";
+                    s += "\n\t}";
+                }
+                return s;
+            }
+            #endregion
+
+            public ButtonBasedElement()
+            {
+                CreateFaces(GetFacesList());
+            }
+        }
+        public class SimpleButtonElement : ButtonBasedElement
+        {
+            [XmlAttribute()]
+            public string Normal = "";
+            [XmlAttribute()]
+            public string Pressed = "";
+            [XmlAttribute()]
+            public string Inactive = "";
+
+            [XmlAttribute()]
+            public bool SendEventWhenAnimationEnds = false;
+
+
+            #region Atribute
+            [XmlIgnore(), Category("Aspect"), DisplayName("Normal state"), Description("Aspect for normal button state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _Normal
+            {
+                get { return Normal; }
+                set { Normal = value; }
+            }
+            [XmlIgnore(), Category("Aspect"), DisplayName("Pressed state"), Description("Aspect for pressed button state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _Pressed
+            {
+                get { return Pressed; }
+                set { Pressed = value; }
+            }
+            [XmlIgnore(), Category("Aspect"), DisplayName("Inactive state"), Description("Aspect for inactive button state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _Inactive
+            {
+                get { return Inactive; }
+                set { Inactive = value; }
+            }
+
+            [XmlIgnore(), Category("Behavior"), DisplayName("Close PopupLoop and send event")]
+            public bool _SendEventWhenAnimationEnds
+            {
+                get { return SendEventWhenAnimationEnds; }
+                set { SendEventWhenAnimationEnds = value; }
+            }
+
+            #endregion
+
+
+            #region Virtual Functions
+            private RuntimeContext symbolExecutionContext = new RuntimeContext();
+            private RuntimeContext textExecutionContext = new RuntimeContext();
+
+            private RectangleF tempRect = new RectangleF();
+
+            protected override string GetFacesList()
+            {
+                return "Normal,Pressed,Inactive";
+            }        
             protected override string GetDescription()
             {
                 return "Event:" + ClickEvent + " , Enable:" + Enabled.ToString() + " , Visible:" + Visible.ToString();
@@ -7018,9 +7434,9 @@ namespace GAppCreator
             }
             public ButtonFaceContainer GetCurrentFace()
             {
-                ButtonFaceContainer face = FaceNormal;
+                ButtonFaceContainer face = faces[0].Face; // Normal
                 if (Enabled == false)
-                    face = FaceInactive;
+                    face = faces[2].Face; // Inactive
                 return face;
             }
             public override void InitRuntimeContext()
@@ -7034,53 +7450,8 @@ namespace GAppCreator
             }
             public override string Validate(Project prj, AppResources resources)
             {
-                string result = "";
-                string res;
+                string result = DoBasicValidations(prj, resources, true, new string[] {Normal,Pressed,Inactive }); 
 
-                EventIDValue = -1;
-                if (ClickEvent.Length == 0)
-                    result += "SimpleButton '" + Name + "' : You have to add a click event ID !\n";
-                foreach (var e in prj.ObjectEventsIDs)
-                    if (e.Name.Equals(ClickEvent))
-                    {
-                        EventIDValue = e.ID;
-                        break;
-                    }
-                if (EventIDValue == -1)
-                    result += "Unknwown event: '" + ClickEvent + "' in simple button : '" + Name + "' !\n";
-
-                if (FaceNormal.CreateFromString(Normal) == false)
-                {
-                    result += "Fail to create normal face for button\n";
-                }
-                else
-                {
-                    res = FaceNormal.Validate(resources, BackgroundStyle);
-                    if (res != null)
-                        result += "Unable to validate normal face: " + res + "\n";
-                }
-
-                if (FacePressed.CreateFromString(Pressed) == false)
-                {
-                    result += "Fail to create normal face for button\n";
-                }
-                else
-                {
-                    res = FacePressed.Validate(resources, BackgroundStyle);
-                    if (res != null)
-                        result += "Unable to validate pressed face: " + res + "\n";
-                }
-
-                if (FaceInactive.CreateFromString(Inactive) == false)
-                {
-                    result += "Fail to create normal face for button\n";
-                }
-                else
-                {
-                    res = FaceInactive.Validate(resources, BackgroundStyle);
-                    if (res != null)
-                        result += "Unable to validate inactive face: " + res + "\n";
-                }
                 if (result.Length == 0)
                     return null;
 
@@ -7089,20 +7460,8 @@ namespace GAppCreator
             public override string CreateOnStartCPPCode(AnimationObject animObj)
             {
                 string s = base.CreateOnStartCPPCode(animObj);
-                s += "\n\t" + Name + ".Enabled = " + GetParamOrDefaultValue(this.Enabled.ToString().ToLower(), UserValue_Enabled) + ";";
                 s += "\n\t" + Name + ".SendEventWhenAnimationEnds = " + this.SendEventWhenAnimationEnds.ToString().ToLower() + ";";
-                s += "\n\t" + Name + ".ClickEvent = " + GetParamOrDefaultValue(this.EventIDValue.ToString(), UserValue_Event) + ";";
-                s += "\n\t" + Name + ".UseBackgoundImage = " + (this.BackgroundStyle == SimpleButtonBackgroundStyle.Image).ToString().ToLower() + ";";
                 s += "\n\t" + Name + ".IsPressed = false;";
-                s += "\n\t" + Name + ".CanProcessTouchEvents = true;";
-                if (SoundName.Length > 0)
-                    s += "\n\t" + Name + ".ClickSound = " + GetParamOrDefaultValue("Res.Sounds." + this.SoundName, UserValue_Sound) + ";";
-                else
-                    s += "\n\t" + Name + ".ClickSound = " + GetParamOrDefaultValue("NULL", UserValue_Sound) + ";";
-
-                s += FaceNormal.CreateOnStartCPPCode(animObj, Name + ".Normal");
-                s += FacePressed.CreateOnStartCPPCode(animObj, Name + ".Pressed");
-                s += FaceInactive.CreateOnStartCPPCode(animObj, Name + ".Inactive");
                 return s;
             }
             public override string GetCPPClassName()
@@ -7112,160 +7471,225 @@ namespace GAppCreator
             public override void PopulateParameters(AnimationParameters p)
             {
                 base.PopulateParameters(p);
-                if (UserValue_Enabled.Length > 0)
-                    p.ParametersList.Add(new ParameterInformation(UserValue_Enabled, "bool"));
-                if (UserValue_Event.Length > 0)
-                    p.ParametersList.Add(new ParameterInformation(UserValue_Event, "int"));
-                if (UserValue_Sound.Length > 0)
-                    p.ParametersList.Add(new ParameterInformation(UserValue_Sound, "GApp::Resources::Sound*", "Sound"));
-                FaceNormal.PopulateParameters(p);
-                FacePressed.PopulateParameters(p);
-                FaceInactive.PopulateParameters(p);
             }
-            private void CreateGetterForButtonSetter(GACParser.Module m, string name, SimpleButtonSetter style, string paramName, string paramType)
-            {
-                GACParser.Member mb = new GACParser.Member(m, GACParser.MemberType.Function, name, name, "void", "", null);
-                if (style == SimpleButtonSetter.OneForAll)
-                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, paramName, paramName, paramType, "", null));
-                else
-                {
-                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, paramName + "Normal", paramName + "Normal", paramType, "", null));
-                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, paramName + "Pressed", paramName + "Pressed", paramType, "", null));
-                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, paramName + "Inactive", paramName + "Inactive", paramType, "", null));
-                }
-                m.Members[name] = mb;
-            }
-            private string CreateCPPHeaderSetterForButtonSetter(string name, SimpleButtonSetter style, string paramName, string cppParamType)
-            {
-                if (style == SimpleButtonSetter.OneForAll)
-                    return "\n\tvoid " + name + " (" + cppParamType + " " + paramName + "); ";
-                else
-                    return "\n\tvoid " + name + " (" + cppParamType + " " + paramName + "Normal, " + cppParamType + " " + paramName + "Pressed, " + cppParamType + " " + paramName + "Inactive); ";
-            }
-            private string CreateCPPCodeSetterForButtonSetter(string className, string name, string objName, string objParam, SimpleButtonSetter style, string paramName, string cppParamType)
-            {
-                string s = "";
-                if (style == SimpleButtonSetter.OneForAll)
-                {
-                    s = "\n\tvoid " + className + "::" + name + " (" + cppParamType + " " + paramName + ") {";
-                    s += "\n\t\tGApp::Animations::Elements::SimpleButtonElement * el = ((GApp::Animations::Elements::SimpleButtonElement*)(&" + objName + "));";
-                    s += "\n\t\tel->Normal." + objParam + " = " + paramName + ";";
-                    s += "\n\t\tel->Pressed." + objParam + " = " + paramName + ";";
-                    s += "\n\t\tel->Inactive." + objParam + " = " + paramName + ";";
-                }
-                else
-                {
-                    s = "\n\tvoid " + className + "::" + name + " (" + cppParamType + " " + paramName + "Normal, " + cppParamType + " " + paramName + "Pressed, " + cppParamType + " " + paramName + "Inactive) {";
-                    s += "\n\t\tGApp::Animations::Elements::SimpleButtonElement * el = ((GApp::Animations::Elements::SimpleButtonElement*)(&" + objName + "));";
-                    s += "\n\t\tel->Normal." + objParam + " = " + paramName + "Normal;";
-                    s += "\n\t\tel->Pressed." + objParam + " = " + paramName + "Pressed;";
-                    s += "\n\t\tel->Inactive." + objParam + " = " + paramName + "Inactive;";
-                }
-                return s + "\n\t}\n";
-            }
-            private string CreateCPPCodeSetterForButtonTextSetter(string className, string name, string objName, SimpleButtonSetter style, string paramName, string cppParamType)
-            {
-                string s = "";
-                if (style == SimpleButtonSetter.OneForAll)
-                {
-                    s = "\n\tvoid " + className + "::" + name + " (" + cppParamType + " " + paramName + ") {";
-                    s += "\n\t\tGApp::Animations::Elements::SimpleButtonElement * el = ((GApp::Animations::Elements::SimpleButtonElement*)(&" + objName + "));";
-                    s += "\n\t\tel->Normal.TP.SetText(" + paramName + ");";
-                    s += "\n\t\tel->Pressed.TP.SetText(" + paramName + ");";
-                    s += "\n\t\tel->Inactive.TP.SetText(" + paramName + ");";
-                }
-                else
-                {
-                    s = "\n\tvoid " + className + "::" + name + " (" + cppParamType + " " + paramName + "Normal, " + cppParamType + " " + paramName + "Pressed, " + cppParamType + " " + paramName + "Inactive) {";
-                    s += "\n\t\tGApp::Animations::Elements::SimpleButtonElement * el = ((GApp::Animations::Elements::SimpleButtonElement*)(&" + objName + "));";
-                    s += "\n\t\tel->Normal.TP.SetText(" + paramName + "Normal);";
-                    s += "\n\t\tel->Pressed.TP.SetText(" + paramName + "Pressed);";
-                    s += "\n\t\tel->Inactive.TP.SetText(" + paramName + "Inactive);";
-                }
-                return s + "\n\t}\n";
-            }
+
             public override void AddAnimationFunction(GACParser.Module m)
             {
                 base.AddAnimationFunction(m);
-                if (Getter_Enabled != YesNo.No)
+            }
+            public override string GetAnimationFunctionCPPHeaderDefinition()
+            {
+                string s = base.GetAnimationFunctionCPPHeaderDefinition();
+                return s;
+            }
+            public override string GetAnimationFunctionCPPImplementation(string className)
+            {
+                extraSetEnable = "el->IsPressed = false;";
+                string s = base.GetAnimationFunctionCPPImplementation(className);
+                return s;
+            }
+            #endregion
+
+
+        }
+
+        public class SimpleCheckBoxElement : ButtonBasedElement
+        {
+            [XmlAttribute()]
+            public string Checked = "";
+            [XmlAttribute()]
+            public string Unchecked = "";
+            [XmlAttribute()]
+            public string CheckedInactive = "";
+            [XmlAttribute()]
+            public string UncheckedInactive = "";
+
+            [XmlAttribute()]
+            public bool IsChecked = true;
+
+
+
+            [XmlAttribute()]
+            public string UserValue_IsChecked = "";
+            [XmlAttribute()]
+            public YesNo Getter_IsChecked = YesNo.No;
+            [XmlAttribute()]
+            public YesNo Setter_IsChecked = YesNo.No;
+
+            #region Atribute
+            [XmlIgnore(), Category("Aspect"), DisplayName("Checked"), Description("Aspect for checkbox checked state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _Checked
+            {
+                get { return Checked; }
+                set { Checked = value; }
+            }
+            [XmlIgnore(), Category("Aspect"), DisplayName("Un-checked"), Description("Aspect for checkbox un-checked state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _Unchecked
+            {
+                get { return Unchecked; }
+                set { Unchecked = value; }
+            }
+            [XmlIgnore(), Category("Aspect"), DisplayName("Inactive Checked"), Description("Aspect for checkbox inactive checked state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _CheckedInactive
+            {
+                get { return CheckedInactive; }
+                set { CheckedInactive = value; }
+            }
+            [XmlIgnore(), Category("Aspect"), DisplayName("Inactive Un-checked"), Description("Aspect for checkbox inactive un-checked state"), Editor(typeof(ButtonStateSelectorEditor), typeof(UITypeEditor))]
+            public string _UncheckedInactive
+            {
+                get { return UncheckedInactive; }
+                set { UncheckedInactive = value; }
+            }
+            [XmlIgnore(), Category("Behavior"), DisplayName("Checked")]
+            public bool _IsChecked
+            {
+                get { return IsChecked; }
+                set { IsChecked = value; }
+            }
+            #endregion
+
+            #region Initialization parameters (user dependent)
+            [XmlIgnore(), Description("Parameter name"), Category("Initialization parameters (user dependent)"), DisplayName("Checked")]
+            public string _UserValue_IsChecked
+            {
+                get { return UserValue_IsChecked; }
+                set { UserValue_IsChecked = value; }
+            }
+            #endregion
+
+            #region Getters and Setters
+            [XmlIgnore(), Description("Specifies if a getter to get check status is to be created."), Category("Getters"), DisplayName("Checked")]
+            public YesNo _Getter_IsChecked
+            {
+                get { return Getter_IsChecked; }
+                set { Getter_IsChecked = value; }
+            }
+            [XmlIgnore(), Description("Sets the symbol image for this specific element"), Category("Setters"), DisplayName("Checked")]
+            public YesNo _Setter_IsChecked
+            {
+                get { return Setter_IsChecked; }
+                set { Setter_IsChecked = value; }
+            }
+
+            #endregion
+
+            #region Virtual Functions
+            private RuntimeContext symbolExecutionContext = new RuntimeContext();
+            private RuntimeContext textExecutionContext = new RuntimeContext();
+
+            private RectangleF tempRect = new RectangleF();
+
+            protected override string GetFacesList()
+            {
+                return "Checked,Unchecked,CheckedInactive,UncheckedInactive";
+            }
+            protected override string GetDescription()
+            {
+                return "Event:" + ClickEvent + " , Enable:" + Enabled.ToString() + " , Visible:" + Visible.ToString()+" , Checked:"+IsChecked.ToString();
+            }
+            public override string GetIconKey()
+            {
+                return "__SimpleCheckbox__";
+            }
+            public override string GetTypeName()
+            {
+                return "SimpleCheckBox";
+            }
+            public ButtonFaceContainer GetCurrentFace()
+            {
+                ButtonFaceContainer face = null;
+                if (Enabled==false)
                 {
-                    string nm = "Is" + Name + "Enabled";
+                    if (IsChecked)
+                        face = faces[2].Face; //CheckedInactive
+                    else
+                        face = faces[3].Face; //UncheckedInactive;
+                } else
+                {
+                    if (IsChecked)
+                        face = faces[0].Face; //Checked;
+                    else
+                        face = faces[1].Face; //Unchecked;
+                }
+                return face;
+            }
+            public override void InitRuntimeContext()
+            {
+                base.InitRuntimeContext();
+                GetCurrentFace().InitRuntimeContext(ExecutionContext, symbolExecutionContext, textExecutionContext, BackgroundStyle);
+            }
+            public override void OnPaint(Canvas c, float deviceWidth, float deviceHeight, BoardViewMode viewMode)
+            {
+                ButtonFaceContainer.Paint(c, tempRect, ExecutionContext, symbolExecutionContext, textExecutionContext, GetCurrentFace().tp, BackgroundStyle);
+            }
+            public override string Validate(Project prj, AppResources resources)
+            {
+                string result = DoBasicValidations(prj, resources, false, new string[] { Checked, Unchecked, CheckedInactive, UncheckedInactive });
+
+                if (result.Length == 0)
+                    return null;
+
+                return result;
+            }
+            public override string CreateOnStartCPPCode(AnimationObject animObj)
+            {
+                string s = base.CreateOnStartCPPCode(animObj);
+                s += "\n\t" + Name + ".IsChecked = " + GetParamOrDefaultValue(this.IsChecked.ToString().ToLower(), UserValue_IsChecked) + ";";
+                return s;
+            }
+            public override string GetCPPClassName()
+            {
+                return "SimpleCheckBoxElement";
+            }
+            public override void PopulateParameters(AnimationParameters p)
+            {
+                base.PopulateParameters(p);
+                if (UserValue_IsChecked.Length > 0)
+                    p.ParametersList.Add(new ParameterInformation(UserValue_IsChecked, "bool"));
+            }
+
+            public override void AddAnimationFunction(GACParser.Module m)
+            {
+                base.AddAnimationFunction(m);
+                if (Getter_IsChecked != YesNo.No)
+                {
+                    string nm = "Is" + Name + "Checked";
                     m.Members[nm] = new GACParser.Member(m, GACParser.MemberType.Function, nm, nm, "bool", "", null);
                 }
-                if (Setter_Symbol_Image != SimpleButtonSetter.No)
-                    CreateGetterForButtonSetter(m, "Set" + Name + "SymbolImage", Setter_Symbol_Image, "symbolImage", "Bitmap");
-                if (Setter_Background_Image != SimpleButtonSetter.No)
-                    CreateGetterForButtonSetter(m, "Set" + Name + "BackgroundImage", Setter_Background_Image, "backgroundImage", "Bitmap");
-
-                if (Setter_Symbol_Color != SimpleButtonSetter.No)
-                    CreateGetterForButtonSetter(m, "Set" + Name + "SymbolColor", Setter_Symbol_Color, "symbolColor", "Color");
-                if (Setter_Background_Color != SimpleButtonSetter.No)
-                    CreateGetterForButtonSetter(m, "Set" + Name + "BackgroundColor", Setter_Background_Color, "backgroundColor", "Color");
-                if (Setter_Text_Color != SimpleButtonSetter.No)
-                    CreateGetterForButtonSetter(m, "Set" + Name + "TextColor", Setter_Text_Color, "textColor", "Color");
-
-                if (Setter_Text != SimpleButtonSetter.No)
-                    CreateGetterForButtonSetter(m, "Set" + Name + "Text", Setter_Text, "text", "string");
-
-                if (Setter_Enabled != YesNo.No)
+                if (Setter_IsChecked!= YesNo.No)
                 {
-                    string nm = "Set" + Name + "Enable";
+                    string nm = "Set" + Name + "Checked";
                     GACParser.Member mb = new GACParser.Member(m, GACParser.MemberType.Function, nm, nm, "void", "", null);
-                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, "enableState", "enableState", "bool", "", null));
+                    mb.AddParameter(new GACParser.Member(m, GACParser.MemberType.Variable, "checkState", "checkState", "bool", "", null));
                     m.Members[nm] = mb;
                 }
             }
             public override string GetAnimationFunctionCPPHeaderDefinition()
             {
                 string s = base.GetAnimationFunctionCPPHeaderDefinition();
-                if (Setter_Symbol_Image != SimpleButtonSetter.No)
-                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "SymbolImage", Setter_Symbol_Image, "symbolImage", "GApp::Resources::Bitmap*");
-                if (Setter_Background_Image != SimpleButtonSetter.No)
-                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "BackgroundImage", Setter_Background_Image, "backgroundImage", "GApp::Resources::Bitmap*");
-                if (Setter_Symbol_Color != SimpleButtonSetter.No)
-                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "SymbolColor", Setter_Symbol_Color, "symbolColor", "unsigned int");
-                if (Setter_Background_Color != SimpleButtonSetter.No)
-                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "BackgroundColor", Setter_Background_Color, "backgroundColor", "unsigned int");
-                if (Setter_Text_Color != SimpleButtonSetter.No)
-                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "TextColor", Setter_Text_Color, "textColor", "unsigned int");
-                if (Setter_Text != SimpleButtonSetter.No)
-                    s += CreateCPPHeaderSetterForButtonSetter("Set" + Name + "Text", Setter_Text, "text", "const char *");
-                if (Getter_Enabled != YesNo.No)
-                    s += "\n\tbool Is" + Name + "Enabled ();";
-                if (Setter_Enabled != YesNo.No)
-                    s += "\n\tvoid Set" + Name + "Enable (bool enableState);";
-
+                if (Getter_IsChecked != YesNo.No)
+                    s += "\n\tbool Is" + Name + "Checked ();";
+                if (Setter_IsChecked != YesNo.No)
+                    s += "\n\tvoid Set" + Name + "Checked (bool checkStatus);";
                 return s;
             }
             public override string GetAnimationFunctionCPPImplementation(string className)
             {
                 string s = base.GetAnimationFunctionCPPImplementation(className);
-                if (Setter_Symbol_Image != SimpleButtonSetter.No)
-                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "SymbolImage", Name, "Symbol", Setter_Symbol_Image, "symbolImage", "GApp::Resources::Bitmap*");
-                if (Setter_Background_Image != SimpleButtonSetter.No)
-                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "BackgroundImage", Name, "Background", Setter_Background_Image, "backgroundImage", "GApp::Resources::Bitmap*");
-                if (Setter_Symbol_Color != SimpleButtonSetter.No)
-                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "SymbolColor", Name, "SymbolColorBlending", Setter_Symbol_Color, "symbolColor", "unsigned int");
-                if (Setter_Background_Color != SimpleButtonSetter.No)
-                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "BackgroundColor", Name, "BackgroundlColorBlending", Setter_Background_Color, "backgroundColor", "unsigned int");
-                if (Setter_Text_Color != SimpleButtonSetter.No)
-                    s += CreateCPPCodeSetterForButtonSetter(className, "Set" + Name + "TextColor", Name, "TextColorBlending", Setter_Text_Color, "textColor", "unsigned int");
-                if (Setter_Text != SimpleButtonSetter.No)
-                    s += CreateCPPCodeSetterForButtonTextSetter(className, "Set" + Name + "Text", Name, Setter_Text, "text", "const char *");
 
-                if (Getter_Enabled != YesNo.No)
+                if (Getter_IsChecked != YesNo.No)
                 {
-                    s += "\n\tbool " + className + "::Is" + Name + "Enabled () {";
-                    s += "\n\t\tGApp::Animations::Elements::SimpleButtonElement * el = ((GApp::Animations::Elements::SimpleButtonElement*)(&" + Name + "));";
-                    s += "\n\t\treturn el->Enabled;";
+                    s += "\n\tbool " + className + "::Is" + Name + "Checked () {";
+                    s += CreateCPPElementCast(Name);
+                    s += "\n\t\treturn el->IsChecked;";
                     s += "\n\t}";
                 }
-                if (Setter_Enabled != YesNo.No)
+                if (Setter_IsChecked != YesNo.No)
                 {
-                    s += "\n\tvoid " + className + "::Set" + Name + "Enable (bool enableState) {";
-                    s += "\n\t\tGApp::Animations::Elements::SimpleButtonElement * el = ((GApp::Animations::Elements::SimpleButtonElement*)(&" + Name + "));";
-                    s += "\n\t\tel->IsPressed = false;";
-                    s += "\n\t\tel->Enabled = enableState;";
+                    s += "\n\tvoid " + className + "::Set" + Name + "Checked (bool checkedStatus) {";
+                    s += CreateCPPElementCast(Name);
+                    s += "\n\t\tel->IsChecked = checkedStatus;";
                     s += "\n\t}";
                 }
                 return s;
@@ -7273,7 +7697,80 @@ namespace GAppCreator
             #endregion
         }
 
+        public class SimpleRadioBoxElement: SimpleCheckBoxElement
+        {
+            [XmlAttribute()]
+            public int Group = 1;
 
+            [XmlIgnore(), Category("Behavior"), DisplayName("Group")]
+            public int _Group
+            {
+                get { return Group; }
+                set { if (value>0) Group = value; }
+            }
+
+            public override string GetIconKey()
+            {
+                return "__SimpleRadiobox__";
+            }
+            public override string GetTypeName()
+            {
+                return "SimpleRadioBox";
+            }
+            public override string GetCPPClassName()
+            {
+                return "SimpleRadioBoxElement";
+            }
+            public override string CreateOnStartCPPCode(AnimationObject animObj)
+            {
+                string s = base.CreateOnStartCPPCode(animObj);                
+                s += "\n\t" + Name + ".Group = " + this.Group.ToString() + ";";
+                return s;
+            }
+            public override void AddAnimationFunction(GACParser.Module m)
+            {
+                base.AddAnimationFunction(m);
+                if (Getter_IsChecked != YesNo.No)
+                {
+                    string nm = "Is" + Name + "Checked";
+                    m.Members[nm] = new GACParser.Member(m, GACParser.MemberType.Function, nm, nm, "bool", "", null);
+                }
+                if (Setter_IsChecked != YesNo.No)
+                {
+                    string nm = "Set" + Name + "Checked";
+                    m.Members[nm] = new GACParser.Member(m, GACParser.MemberType.Function, nm, nm, "void", "", null);
+                }
+            }
+            public override string GetAnimationFunctionCPPHeaderDefinition()
+            {
+                string s = base.GetAnimationFunctionCPPHeaderDefinition();
+                if (Getter_IsChecked != YesNo.No)
+                    s += "\n\tbool Is" + Name + "Checked ();";
+                if (Setter_IsChecked != YesNo.No)
+                    s += "\n\tvoid Set" + Name + "Checked ();";
+                return s;
+            }
+            public override string GetAnimationFunctionCPPImplementation(string className)
+            {
+                string s = base.GetAnimationFunctionCPPImplementation(className);
+
+                if (Getter_IsChecked != YesNo.No)
+                {
+                    s += "\n\tbool " + className + "::Is" + Name + "Checked () {";
+                    s += CreateCPPElementCast(Name);
+                    s += "\n\t\treturn el->IsChecked;";
+                    s += "\n\t}";
+                }
+                if (Setter_IsChecked != YesNo.No)
+                {
+                    s += "\n\tvoid " + className + "::Set" + Name + "Checked () {";
+                    s += CreateCPPElementCast(Name);
+                    s += "\n\t\tthis->RadioBoxCheck(el->Group,el);";
+                    s += "\n\t}";
+                }
+                return s;
+            }
+        }
         #endregion
 
         #region Animation Object
@@ -7333,7 +7830,10 @@ namespace GAppCreator
             [XmlArrayItem(typeof(ExclusionRectangleElement))]
             [XmlArrayItem(typeof(ClipRectangleElement))]
             [XmlArrayItem(typeof(DisableClippingElement))]
+            [XmlArrayItem(typeof(ButtonBasedElement))]
             [XmlArrayItem(typeof(SimpleButtonElement))]
+            [XmlArrayItem(typeof(SimpleCheckBoxElement))]
+            [XmlArrayItem(typeof(SimpleRadioBoxElement))]
             [XmlArrayItem(typeof(GenericElementWithPosition))]
             [XmlArrayItem(typeof(GenericElementWithPositionAndSize))]
             public List<GenericElement> Elements = new List<GenericElement>();
@@ -7626,7 +8126,32 @@ namespace GAppCreator
                         prj.EC.AddError("Animation '" + Name + "' does not have element '" + k + "' added in the Z-Order list !");
                     }
             }
-
+            private void ValidateRadioBox(Project prj)
+            {
+                Dictionary<int, int> radioBoxGroup = null;
+                foreach (var e in Elements)
+                {
+                    if (e.GetType() == typeof(SimpleRadioBoxElement))
+                    {
+                        if (radioBoxGroup == null)
+                            radioBoxGroup = new Dictionary<int, int>();
+                        int group = ((SimpleRadioBoxElement)e).Group;
+                        if (radioBoxGroup.ContainsKey(group) == false)
+                            radioBoxGroup[group] = 0;
+                        if (((SimpleRadioBoxElement)e).IsChecked)
+                            radioBoxGroup[group]++;
+                    }
+                }
+                if (radioBoxGroup == null)
+                    return; // nu am nici un radiobox
+                foreach (int g in radioBoxGroup.Keys)
+                {
+                    if (radioBoxGroup[g]>1)
+                    {
+                        prj.EC.AddError("Animation '" + Name + "' has "+ radioBoxGroup[g].ToString()+ " checked radio boxes for group "+g.ToString());
+                    }
+                }
+            }
             public bool ValidateAnimation(Project prj, AppResources resources)
             {
                 if ((DesignMode == AnimationDesignMode.Control) || (DesignMode == AnimationDesignMode.Button))
@@ -7637,6 +8162,7 @@ namespace GAppCreator
                         prj.EC.AddError("Animation '" + Name + "' has a Control/Button Height too small: " + ControlHeight.ToString() + " !");
                 }
                 Dictionary<string, GenericElement> elements = new Dictionary<string, GenericElement>();
+                
                 foreach (var e in Elements)
                 {
                     if (elements.ContainsKey(e.Name))
@@ -7647,6 +8173,8 @@ namespace GAppCreator
                     if (s != null)
                         prj.EC.AddError("Animation '" + Name + "' has an incorecet set up element: '" + e.Name + "' => Error: " + s);
                 }
+                // validez RadioBoxGroup
+                ValidateRadioBox(prj);
                 // validez ZOrder
                 ValidateZOrder(ZOrder, elements, prj);
                 // validez relatia element - parinte
@@ -7831,6 +8359,7 @@ namespace GAppCreator
                 s += "\n\tvirtual bool OnStart();";
                 s += "\n\tvirtual void SetZOrder(int index);";
                 s += "\n\tvirtual bool OnTouchEvent(GApp::Controls::TouchEvent *te);";
+                s += "\n\tvirtual void RadioBoxCheck(int groupID, GApp::Animations::Elements::Element* obj);";
                 return s + "\n};\n";
             }
 
@@ -8032,6 +8561,11 @@ namespace GAppCreator
                 // OnTouchEvent
                 s += "\nbool " + GetCPPClassName() + "::OnTouchEvent(GApp::Controls::TouchEvent *te) {";
                 s += "\n\treturn ProcessTouchEvents(te,ZOrder," + Elements.Count.ToString() + ");";
+                s += "\n}";
+
+                // RadioBoxCheck
+                s += "\nvoid " + GetCPPClassName() + "::RadioBoxCheck(int groupID, GApp::Animations::Elements::Element * obj) {";
+                s += "\n\t PerformRadioBoxCheck(groupID, obj, ZOrder," + Elements.Count.ToString() + ");";
                 s += "\n}";
                 return s + "\n";
             }

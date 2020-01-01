@@ -107,6 +107,8 @@
             this.standardIconsSmall.Images.SetKeyName(10, "__ClipRect__");
             this.standardIconsSmall.Images.SetKeyName(11, "__DisableClipping__");
             this.standardIconsSmall.Images.SetKeyName(12, "__SimpleButton__");
+            this.standardIconsSmall.Images.SetKeyName(13, "__SimpleCheckbox__");
+            this.standardIconsSmall.Images.SetKeyName(14, "__SimpleRadiobox__");
             // 
             // standardIconsLarge
             // 
@@ -125,6 +127,8 @@
             this.standardIconsLarge.Images.SetKeyName(10, "__ClipRect__");
             this.standardIconsLarge.Images.SetKeyName(11, "__DisableClipping__");
             this.standardIconsLarge.Images.SetKeyName(12, "__SimpleButton__");
+            this.standardIconsLarge.Images.SetKeyName(13, "__SimpleCheckbox__");
+            this.standardIconsLarge.Images.SetKeyName(14, "__SimpleRadiobox__");
             // 
             // splitContainer1
             // 
@@ -175,7 +179,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panelResourcePreview);
             this.splitContainer2.Size = new System.Drawing.Size(1528, 932);
-            this.splitContainer2.SplitterDistance = 1210;
+            this.splitContainer2.SplitterDistance = 1204;
             this.splitContainer2.SplitterWidth = 6;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -186,7 +190,7 @@
             this.panelResourcePreview.Location = new System.Drawing.Point(0, 0);
             this.panelResourcePreview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelResourcePreview.Name = "panelResourcePreview";
-            this.panelResourcePreview.Size = new System.Drawing.Size(310, 930);
+            this.panelResourcePreview.Size = new System.Drawing.Size(316, 930);
             this.panelResourcePreview.TabIndex = 0;
             // 
             // toolStrip1

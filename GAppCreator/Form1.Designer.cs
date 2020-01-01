@@ -100,15 +100,25 @@
             this.lbInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainTab = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.tabProjectMain = new GAppCreator.ProjectTabMain();
             this.tabPublisher = new System.Windows.Forms.TabPage();
+            this.tabProjectPublishMaterials = new GAppCreator.ProjectTabPublishMaterials();
             this.tabResources = new System.Windows.Forms.TabPage();
+            this.tabProjectResources = new GAppCreator.ProjectTabResources();
             this.tabProfiles = new System.Windows.Forms.TabPage();
+            this.tabProjectMemoryProfiles = new GAppCreator.ProjectTabMemoryProfiles();
             this.tabStrings = new System.Windows.Forms.TabPage();
+            this.tabProjectStrings = new GAppCreator.ProjectTabStrings();
             this.tabAds = new System.Windows.Forms.TabPage();
+            this.tabProjectAds = new GAppCreator.ProjectTabAds();
             this.tabConstants = new System.Windows.Forms.TabPage();
+            this.tabProjectConstants = new GAppCreator.ProjectTabConstants();
             this.tabCountersAndAlarms = new System.Windows.Forms.TabPage();
+            this.tabProjectCountersAndTimers = new GAppCreator.ProjectTabCountersAndAlerts();
             this.tabAnimationObjects = new System.Windows.Forms.TabPage();
+            this.tabProjectAnimationObjects = new GAppCreator.ProjectTabAnimation();
             this.tabCode = new System.Windows.Forms.TabPage();
+            this.tabProjectEditor = new GAppCreator.ProjectTabEditor();
             this.resImagesLarge = new System.Windows.Forms.ImageList(this.components);
             this.resImagesSmall = new System.Windows.Forms.ImageList(this.components);
             this.taskEventIcons = new System.Windows.Forms.ImageList(this.components);
@@ -120,16 +130,6 @@
             this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.iconMainScreen = new System.Windows.Forms.ImageList(this.components);
             this.timerIDETimes = new System.Windows.Forms.Timer(this.components);
-            this.tabProjectMain = new GAppCreator.ProjectTabMain();
-            this.tabProjectPublishMaterials = new GAppCreator.ProjectTabPublishMaterials();
-            this.tabProjectResources = new GAppCreator.ProjectTabResources();
-            this.tabProjectMemoryProfiles = new GAppCreator.ProjectTabMemoryProfiles();
-            this.tabProjectStrings = new GAppCreator.ProjectTabStrings();
-            this.tabProjectAds = new GAppCreator.ProjectTabAds();
-            this.tabProjectConstants = new GAppCreator.ProjectTabConstants();
-            this.tabProjectCountersAndTimers = new GAppCreator.ProjectTabCountersAndAlerts();
-            this.tabProjectAnimationObjects = new GAppCreator.ProjectTabAnimation();
-            this.tabProjectEditor = new GAppCreator.ProjectTabEditor();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainTab.SuspendLayout();
@@ -740,6 +740,15 @@
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // tabProjectMain
+            // 
+            this.tabProjectMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectMain.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectMain.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectMain.Name = "tabProjectMain";
+            this.tabProjectMain.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectMain.TabIndex = 0;
+            // 
             // tabPublisher
             // 
             this.tabPublisher.Controls.Add(this.tabProjectPublishMaterials);
@@ -751,6 +760,15 @@
             this.tabPublisher.TabIndex = 7;
             this.tabPublisher.Text = "Publish Materials";
             this.tabPublisher.UseVisualStyleBackColor = true;
+            // 
+            // tabProjectPublishMaterials
+            // 
+            this.tabProjectPublishMaterials.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectPublishMaterials.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectPublishMaterials.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectPublishMaterials.Name = "tabProjectPublishMaterials";
+            this.tabProjectPublishMaterials.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectPublishMaterials.TabIndex = 0;
             // 
             // tabResources
             // 
@@ -764,6 +782,15 @@
             this.tabResources.Text = "Resources";
             this.tabResources.UseVisualStyleBackColor = true;
             // 
+            // tabProjectResources
+            // 
+            this.tabProjectResources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectResources.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectResources.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectResources.Name = "tabProjectResources";
+            this.tabProjectResources.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectResources.TabIndex = 0;
+            // 
             // tabProfiles
             // 
             this.tabProfiles.Controls.Add(this.tabProjectMemoryProfiles);
@@ -776,6 +803,15 @@
             this.tabProfiles.Text = "Memory Management Profiles";
             this.tabProfiles.UseVisualStyleBackColor = true;
             // 
+            // tabProjectMemoryProfiles
+            // 
+            this.tabProjectMemoryProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectMemoryProfiles.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectMemoryProfiles.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectMemoryProfiles.Name = "tabProjectMemoryProfiles";
+            this.tabProjectMemoryProfiles.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectMemoryProfiles.TabIndex = 0;
+            // 
             // tabStrings
             // 
             this.tabStrings.Controls.Add(this.tabProjectStrings);
@@ -786,6 +822,15 @@
             this.tabStrings.TabIndex = 3;
             this.tabStrings.Text = "Strings";
             this.tabStrings.UseVisualStyleBackColor = true;
+            // 
+            // tabProjectStrings
+            // 
+            this.tabProjectStrings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectStrings.Location = new System.Drawing.Point(0, 0);
+            this.tabProjectStrings.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectStrings.Name = "tabProjectStrings";
+            this.tabProjectStrings.Size = new System.Drawing.Size(2263, 922);
+            this.tabProjectStrings.TabIndex = 0;
             // 
             // tabAds
             // 
@@ -799,6 +844,15 @@
             this.tabAds.Text = "Advertisements";
             this.tabAds.UseVisualStyleBackColor = true;
             // 
+            // tabProjectAds
+            // 
+            this.tabProjectAds.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectAds.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectAds.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectAds.Name = "tabProjectAds";
+            this.tabProjectAds.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectAds.TabIndex = 0;
+            // 
             // tabConstants
             // 
             this.tabConstants.Controls.Add(this.tabProjectConstants);
@@ -810,6 +864,15 @@
             this.tabConstants.TabIndex = 8;
             this.tabConstants.Text = "Constants";
             this.tabConstants.UseVisualStyleBackColor = true;
+            // 
+            // tabProjectConstants
+            // 
+            this.tabProjectConstants.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectConstants.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectConstants.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectConstants.Name = "tabProjectConstants";
+            this.tabProjectConstants.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectConstants.TabIndex = 0;
             // 
             // tabCountersAndAlarms
             // 
@@ -823,6 +886,15 @@
             this.tabCountersAndAlarms.Text = "Counters and Alarms";
             this.tabCountersAndAlarms.UseVisualStyleBackColor = true;
             // 
+            // tabProjectCountersAndTimers
+            // 
+            this.tabProjectCountersAndTimers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectCountersAndTimers.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectCountersAndTimers.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectCountersAndTimers.Name = "tabProjectCountersAndTimers";
+            this.tabProjectCountersAndTimers.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectCountersAndTimers.TabIndex = 0;
+            // 
             // tabAnimationObjects
             // 
             this.tabAnimationObjects.Controls.Add(this.tabProjectAnimationObjects);
@@ -835,6 +907,15 @@
             this.tabAnimationObjects.Text = "Animation Objects";
             this.tabAnimationObjects.UseVisualStyleBackColor = true;
             // 
+            // tabProjectAnimationObjects
+            // 
+            this.tabProjectAnimationObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectAnimationObjects.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectAnimationObjects.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectAnimationObjects.Name = "tabProjectAnimationObjects";
+            this.tabProjectAnimationObjects.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectAnimationObjects.TabIndex = 0;
+            // 
             // tabCode
             // 
             this.tabCode.Controls.Add(this.tabProjectEditor);
@@ -846,6 +927,15 @@
             this.tabCode.TabIndex = 4;
             this.tabCode.Text = "Code";
             this.tabCode.UseVisualStyleBackColor = true;
+            // 
+            // tabProjectEditor
+            // 
+            this.tabProjectEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabProjectEditor.Location = new System.Drawing.Point(4, 5);
+            this.tabProjectEditor.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tabProjectEditor.Name = "tabProjectEditor";
+            this.tabProjectEditor.Size = new System.Drawing.Size(2255, 912);
+            this.tabProjectEditor.TabIndex = 0;
             // 
             // resImagesLarge
             // 
@@ -901,6 +991,7 @@
             listViewGroup1,
             listViewGroup2,
             listViewGroup3});
+            this.lstMainScreenOperation.HideSelection = false;
             listViewItem1.Group = listViewGroup1;
             listViewItem1.Tag = "-2";
             listViewItem2.Group = listViewGroup1;
@@ -932,96 +1023,6 @@
             this.timerIDETimes.Enabled = true;
             this.timerIDETimes.Interval = 1000;
             this.timerIDETimes.Tick += new System.EventHandler(this.OnUpdateWorkingTime);
-            // 
-            // tabProjectMain
-            // 
-            this.tabProjectMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectMain.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectMain.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectMain.Name = "tabProjectMain";
-            this.tabProjectMain.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectMain.TabIndex = 0;
-            // 
-            // tabProjectPublishMaterials
-            // 
-            this.tabProjectPublishMaterials.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectPublishMaterials.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectPublishMaterials.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectPublishMaterials.Name = "tabProjectPublishMaterials";
-            this.tabProjectPublishMaterials.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectPublishMaterials.TabIndex = 0;
-            // 
-            // tabProjectResources
-            // 
-            this.tabProjectResources.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectResources.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectResources.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectResources.Name = "tabProjectResources";
-            this.tabProjectResources.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectResources.TabIndex = 0;
-            // 
-            // tabProjectMemoryProfiles
-            // 
-            this.tabProjectMemoryProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectMemoryProfiles.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectMemoryProfiles.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectMemoryProfiles.Name = "tabProjectMemoryProfiles";
-            this.tabProjectMemoryProfiles.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectMemoryProfiles.TabIndex = 0;
-            // 
-            // tabProjectStrings
-            // 
-            this.tabProjectStrings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectStrings.Location = new System.Drawing.Point(0, 0);
-            this.tabProjectStrings.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectStrings.Name = "tabProjectStrings";
-            this.tabProjectStrings.Size = new System.Drawing.Size(2263, 922);
-            this.tabProjectStrings.TabIndex = 0;
-            // 
-            // tabProjectAds
-            // 
-            this.tabProjectAds.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectAds.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectAds.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectAds.Name = "tabProjectAds";
-            this.tabProjectAds.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectAds.TabIndex = 0;
-            // 
-            // tabProjectConstants
-            // 
-            this.tabProjectConstants.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectConstants.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectConstants.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectConstants.Name = "tabProjectConstants";
-            this.tabProjectConstants.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectConstants.TabIndex = 0;
-            // 
-            // tabProjectCountersAndTimers
-            // 
-            this.tabProjectCountersAndTimers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectCountersAndTimers.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectCountersAndTimers.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectCountersAndTimers.Name = "tabProjectCountersAndTimers";
-            this.tabProjectCountersAndTimers.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectCountersAndTimers.TabIndex = 0;
-            // 
-            // tabProjectAnimationObjects
-            // 
-            this.tabProjectAnimationObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectAnimationObjects.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectAnimationObjects.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectAnimationObjects.Name = "tabProjectAnimationObjects";
-            this.tabProjectAnimationObjects.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectAnimationObjects.TabIndex = 0;
-            // 
-            // tabProjectEditor
-            // 
-            this.tabProjectEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabProjectEditor.Location = new System.Drawing.Point(4, 5);
-            this.tabProjectEditor.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tabProjectEditor.Name = "tabProjectEditor";
-            this.tabProjectEditor.Size = new System.Drawing.Size(2255, 912);
-            this.tabProjectEditor.TabIndex = 0;
             // 
             // Form1
             // 
