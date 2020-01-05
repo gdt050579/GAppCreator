@@ -3497,7 +3497,8 @@ namespace GAppCreator
             {
                 if (ElementObject.GetType() == typeof(AnimO.ImageElement))
                 {
-                    ((AnimO.ImageElement)ElementObject).ExecutionContext.Image = bmp;
+                    AnimO.ImageElement el = (AnimO.ImageElement)ElementObject;
+                    el.ExecutionContext.Image = bmp;                    
                 }
             }
         }
@@ -5467,14 +5468,18 @@ namespace GAppCreator
 
             protected override float GetWidthInPixels()
             {
-                if (ImageIndex < internalImages.Count)
-                    return internalImages[ImageIndex].Width;
+                if (ExecutionContext.Image != null)
+                    return ExecutionContext.Image.Width;
+                //if (ImageIndex < internalImages.Count)
+                //    return internalImages[ImageIndex].Width;
                 return 0;
             }
             protected override float GetHeightInPixels()
             {
-                if (ImageIndex < internalImages.Count)
-                    return internalImages[ImageIndex].Height;
+                if (ExecutionContext.Image != null)
+                    return ExecutionContext.Image.Height;
+                //if (ImageIndex < internalImages.Count)
+                //   return internalImages[ImageIndex].Height;
                 return 0;
             }
             protected override void SetPositionAndSize(float x_percentage, float y_percantage, float unscaled_widthInPixels, float unscaled_heightInPixels, float scaledWidth, float scaleHeight)
