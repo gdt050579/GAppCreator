@@ -23,6 +23,7 @@ namespace GAppCreator
             "Buffer.cpp",
             "Button.cpp",   
             "Counters.cpp",
+            "DateTime.cpp",
             "Font.cpp",
             "FPSCounter.cpp",
             "GApp.h",

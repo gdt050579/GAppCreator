@@ -8376,7 +8376,7 @@ namespace GAppCreator
                 string param_list_for_call = CreateParameterListForCall();
                 bool hasClipping = false;
                 // constructor componeent
-                string constr_code = "\n\tCoreContext = __init_object__->CoreContext;";
+                string constr_code = "\n\tCoreContext = __init_object__->CoreContext;\n\tthis->TouchCaptureElement = NULL;";
                 if ((DesignMode == AnimationDesignMode.Control) || (DesignMode == AnimationDesignMode.Button))
                 {
                     constr_code += "\n\tWidth = " + ControlWidth.ToString() + " * (Core.ResolutionAspectRatio);";
@@ -8405,6 +8405,8 @@ namespace GAppCreator
                     constr_code += "\n\tthis->RelativeOrder[" + tr.ToString() + "] = &" + this.ParentsPositionOrder[tr].Name + ";";
                 constr_code += "\n\tInitializeTransformations();";
                 constr_code += "\n\tCreate(" + param_list_for_call + ");";
+                // ZOrder for safety initialization
+                constr_code += "\n\tSetZOrder(0);";
                 constr_code += "\n}";
 
                 // constructor pentru SCENA =======================================================================================================================================
